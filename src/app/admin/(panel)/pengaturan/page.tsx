@@ -17,6 +17,7 @@ import {
   Database,
 } from "lucide-react";
 import { getPengaturan, updatePengaturan } from "@/app/actions/pengaturan";
+import ImageUploader from "@/components/ui/ImageUploader";
 
 type HalamanStatis = {
   slug: string;
@@ -53,6 +54,10 @@ export default function AdminPengaturanPage() {
     instagramUrl: "",
     twitterUrl: "",
     youtubeUrl: "",
+    logoWebsite: "",
+    fotoHeader: "",
+    fotoProfil: "",
+    fotoVirtualTour: "",
     uploadProvider: "local",
     s3Endpoint: "",
     s3Region: "",
@@ -87,6 +92,10 @@ export default function AdminPengaturanPage() {
           instagramUrl: pData.instagramUrl || "",
           twitterUrl: pData.twitterUrl || "",
           youtubeUrl: pData.youtubeUrl || "",
+          logoWebsite: pData.logoWebsite || "",
+          fotoHeader: pData.fotoHeader || "",
+          fotoProfil: pData.fotoProfil || "",
+          fotoVirtualTour: pData.fotoVirtualTour || "",
           uploadProvider: pData.uploadProvider || "local",
           s3Endpoint: pData.s3Endpoint || "",
           s3Region: pData.s3Region || "",
@@ -297,6 +306,32 @@ export default function AdminPengaturanPage() {
                       value={pengaturanData.ratingKepuasan}
                       onChange={(e) => setPengaturanData({ ...pengaturanData, ratingKepuasan: e.target.value })}
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-6 md:col-span-2">
+                  <h3 className="text-lg font-bold text-slate-800 border-b border-slate-100 pb-2">Gambar Dinamis Website</h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <ImageUploader 
+                      label="Logo Website" 
+                      value={pengaturanData.logoWebsite} 
+                      onChange={(val) => setPengaturanData({ ...pengaturanData, logoWebsite: val })} 
+                    />
+                    <ImageUploader 
+                      label="Foto Latar (Header)" 
+                      value={pengaturanData.fotoHeader} 
+                      onChange={(val) => setPengaturanData({ ...pengaturanData, fotoHeader: val })} 
+                    />
+                    <ImageUploader 
+                      label="Foto Profil Singkat" 
+                      value={pengaturanData.fotoProfil} 
+                      onChange={(val) => setPengaturanData({ ...pengaturanData, fotoProfil: val })} 
+                    />
+                    <ImageUploader 
+                      label="Foto Virtual Tour" 
+                      value={pengaturanData.fotoVirtualTour} 
+                      onChange={(val) => setPengaturanData({ ...pengaturanData, fotoVirtualTour: val })} 
                     />
                   </div>
                 </div>

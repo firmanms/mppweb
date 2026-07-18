@@ -154,7 +154,7 @@ export default async function HomePage() {
             <div className="relative animate-slide-in-right hidden lg:block">
               <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100 max-h-[460px] aspect-[4/3]">
                 <img
-                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=82"
+                  src={data.pengaturan.fotoHeader || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=82"}
                   alt="Gedung MPP Kabupaten Bandung"
                   className="w-full h-full object-cover"
                 />
@@ -451,7 +451,7 @@ export default async function HomePage() {
             <div className="relative">
               <div className="w-[92%] rounded-3xl overflow-hidden shadow-xl aspect-[4/3] bg-slate-100">
                 <img
-                  src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=85"
+                  src={data.pengaturan.fotoProfil || "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=85"}
                   alt="Interior MPP"
                   className="w-full h-full object-cover"
                 />
@@ -560,7 +560,7 @@ export default async function HomePage() {
           <div
             className="relative rounded-[32px] overflow-hidden min-h-[440px] flex items-center bg-slate-950 text-white shadow-xl"
             style={{
-              backgroundImage: `linear-gradient(90deg, rgba(5, 34, 65, 0.9) 0%, rgba(5, 34, 65, 0.3) 100%), url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=85")`,
+              backgroundImage: `linear-gradient(90deg, rgba(5, 34, 65, 0.9) 0%, rgba(5, 34, 65, 0.3) 100%), url("${data.pengaturan.fotoVirtualTour || 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=85'}")`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}

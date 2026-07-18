@@ -64,9 +64,15 @@ export default async function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 mb-5">
-              <div className="w-11 h-11 rounded-xl gradient-primary flex items-center justify-center">
-                <Building2 className="w-6 h-6 text-white" />
-              </div>
+              {pData?.logoWebsite ? (
+                <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-slate-700/50">
+                  <img src={pData.logoWebsite} alt="Logo" className="w-full h-full object-contain p-1" />
+                </div>
+              ) : (
+                <div className="w-11 h-11 rounded-xl gradient-primary flex items-center justify-center">
+                  <Building2 className="w-6 h-6 text-white" />
+                </div>
+              )}
               <div>
                 <p className="text-base font-bold text-white leading-tight">
                   Mal Pelayanan Publik

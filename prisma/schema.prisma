@@ -143,6 +143,12 @@ model Pengaturan {
   twitterUrl      String?
   youtubeUrl      String?
   
+  // Gambar-gambar dinamis
+  logoWebsite     String?
+  fotoHeader      String?
+  fotoProfil      String?
+  fotoVirtualTour String?
+
   // Penyimpanan (Storage)
   uploadProvider  String   @default("local") // "local" atau "s3"
   s3Endpoint      String?

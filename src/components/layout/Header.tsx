@@ -22,7 +22,7 @@ const navLinks = [
   { href: "/mpp-digital", label: "MPP Digital" },
 ];
 
-export default function Header() {
+export default function Header({ logoUrl }: { logoUrl?: string }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -77,9 +77,15 @@ export default function Header() {
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 shrink-0">
-              <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl gradient-primary flex items-center justify-center shadow-md">
-                <Building2 className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
-              </div>
+              {logoUrl ? (
+                <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center overflow-hidden bg-white shadow-sm border border-slate-100">
+                  <img src={logoUrl} alt="Logo" className="w-full h-full object-contain p-1" />
+                </div>
+              ) : (
+                <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl gradient-primary flex items-center justify-center shadow-md">
+                  <Building2 className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
+                </div>
+              )}
               <div className="hidden sm:block">
                 <p className="text-sm lg:text-base font-bold text-primary-800 leading-tight">
                   Mal Pelayanan Publik
