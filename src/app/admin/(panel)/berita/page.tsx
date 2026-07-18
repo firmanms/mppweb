@@ -18,9 +18,12 @@ import {
   Loader2,
   AlertCircle,
   CheckCircle,
+  FileText,
+  Image as ImageIcon,
 } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import ImageUploader from "@/components/ui/ImageUploader";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 
 type Berita = {
   id: number;
@@ -358,18 +361,12 @@ export default function AdminBeritaPage() {
 
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-1">
-                  Konten Berita (HTML supported) <span className="text-red-500">*</span>
+                  Konten Berita <span className="text-red-500">*</span>
                 </label>
-                <textarea
-                  required
-                  value={konten}
-                  onChange={(e) => setKonten(e.target.value)}
-                  rows={8}
-                  placeholder="<p>Tuliskan isi berita di sini...</p>"
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm font-mono resize-none"
-                />
+                <div className="mt-1">
+                  <RichTextEditor value={konten} onChange={setKonten} />
+                </div>
               </div>
-
               <div className="pt-4 border-t border-slate-100 flex justify-end gap-3">
                 <button
                   type="button"

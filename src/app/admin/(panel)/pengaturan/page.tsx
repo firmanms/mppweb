@@ -15,9 +15,14 @@ import {
   CheckCircle,
   Globe,
   Database,
+  Shield,
+  Key,
+  Image as ImageIcon,
 } from "lucide-react";
-import { getPengaturan, updatePengaturan } from "@/app/actions/pengaturan";
+import { updatePengaturan, getPengaturan } from "@/app/actions/pengaturan";
+
 import ImageUploader from "@/components/ui/ImageUploader";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 
 type HalamanStatis = {
   slug: string;
@@ -474,14 +479,11 @@ export default function AdminPengaturanPage() {
               </div>
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Konten Halaman (HTML)
+                  Konten Halaman
                 </label>
-                <textarea
-                  value={profilKonten}
-                  onChange={(e) => setProfilKonten(e.target.value)}
-                  rows={15}
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm font-mono resize-none leading-relaxed"
-                />
+                <div className="mt-1">
+                  <RichTextEditor value={profilKonten} onChange={setProfilKonten} />
+                </div>
               </div>
               <div className="flex justify-end pt-4 border-t border-slate-100">
                 <button

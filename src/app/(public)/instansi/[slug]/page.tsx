@@ -70,9 +70,10 @@ export default async function InstansiDetailPage({ params }: Props) {
                 {instansi.nama}
               </h1>
               {instansi.deskripsi && (
-                <p className="text-slate-500 text-lg leading-relaxed">
-                  {instansi.deskripsi}
-                </p>
+                <div 
+                  className="prose-content text-slate-500 text-lg leading-relaxed" 
+                  dangerouslySetInnerHTML={{ __html: instansi.deskripsi }} 
+                />
               )}
             </div>
           </div>

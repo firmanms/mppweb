@@ -21,6 +21,7 @@ import {
   CheckCircle,
   Building,
 } from "lucide-react";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 
 type Instansi = {
   id: number;
@@ -471,68 +472,44 @@ export default function AdminLayananPage() {
 
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-1">Deskripsi Layanan</label>
-                <textarea
-                  value={deskripsi}
-                  onChange={(e) => setDeskripsi(e.target.value)}
-                  rows={3}
-                  placeholder="Deskripsi singkat mengenai layanan..."
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm resize-none"
-                />
+                <div className="mt-1">
+                  <RichTextEditor value={deskripsi} onChange={setDeskripsi} />
+                </div>
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-1">Dasar Hukum</label>
-                <textarea
-                  value={dasarHukum}
-                  onChange={(e) => setDasarHukum(e.target.value)}
-                  rows={3}
-                  placeholder="Undang-undang, Peraturan Pemerintah, Peraturan Daerah yang mendasari layanan..."
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm resize-none"
-                />
+                <div className="mt-1">
+                  <RichTextEditor value={dasarHukum} onChange={setDasarHukum} />
+                </div>
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-1">Persyaratan Dokumen</label>
-                <textarea
-                  value={persyaratan}
-                  onChange={(e) => setPersyaratan(e.target.value)}
-                  rows={4}
-                  placeholder="Tuliskan persyaratan dokumen, per baris.&#10;1. KTP Asli&#10;2. Kartu Keluarga"
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm resize-none"
-                />
+                <div className="mt-1">
+                  <RichTextEditor value={persyaratan} onChange={setPersyaratan} />
+                </div>
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-1">Prosedur / Alur Pelayanan</label>
-                <textarea
-                  value={prosedur}
-                  onChange={(e) => setProsedur(e.target.value)}
-                  rows={4}
-                  placeholder="Tuliskan alur atau prosedur pengurusan secara detail..."
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm resize-none"
-                />
+                <div className="mt-1">
+                  <RichTextEditor value={prosedur} onChange={setProsedur} />
+                </div>
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-1">Produk Pelayanan</label>
-                <textarea
-                  value={produkLayanan}
-                  onChange={(e) => setProdukLayanan(e.target.value)}
-                  rows={3}
-                  placeholder="Hasil akhir layanan (Contoh: Fisik KTP-el, Sertifikat NIB, dll)..."
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm resize-none"
-                />
+                <div className="mt-1">
+                  <RichTextEditor value={produkLayanan} onChange={setProdukLayanan} />
+                </div>
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-1">Penanganan Pengaduan, Saran, dan Masukan</label>
-                <textarea
-                  value={pengaduan}
-                  onChange={(e) => setPengaduan(e.target.value)}
-                  rows={3}
-                  placeholder="Kontak, loket, atau prosedur untuk mengajukan pengaduan, kritik, dan saran..."
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm resize-none"
-                />
+                <div className="mt-1">
+                  <RichTextEditor value={pengaduan} onChange={setPengaduan} />
+                </div>
               </div>
 
               <div className="pt-4 border-t border-slate-100 flex justify-end gap-3">

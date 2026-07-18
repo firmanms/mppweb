@@ -33,6 +33,7 @@ import {
   UtensilsCrossed
 } from "lucide-react";
 import ImageUploader from "@/components/ui/ImageUploader";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 
 type Fasilitas = {
   id: number;
@@ -343,13 +344,9 @@ export default function AdminFasilitasPage() {
 
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-1">Deskripsi Fasilitas</label>
-                <textarea
-                  value={deskripsi}
-                  onChange={(e) => setDeskripsi(e.target.value)}
-                  rows={4}
-                  placeholder="Penjelasan ringkas mengenai fasilitas..."
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm resize-none"
-                />
+                <div className="mt-1">
+                  <RichTextEditor value={deskripsi} onChange={setDeskripsi} />
+                </div>
               </div>
 
               <div className="pt-4 border-t border-slate-100 flex justify-end gap-3">

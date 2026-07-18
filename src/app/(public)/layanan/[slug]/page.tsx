@@ -90,7 +90,7 @@ export default async function LayananDetailPage({ params }: Props) {
           </Link>
 
           {layanan.deskripsi && (
-            <p className="text-slate-600 mt-6 text-lg leading-relaxed">{layanan.deskripsi}</p>
+            <div className="prose-content text-slate-600 mt-6 text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: layanan.deskripsi }} />
           )}
 
           {/* Quick Info */}
@@ -133,9 +133,10 @@ export default async function LayananDetailPage({ params }: Props) {
               <Scale className="w-6 h-6 text-primary-500" />
               Dasar Hukum
             </h2>
-            <div className="prose-content whitespace-pre-line text-slate-600">
-              {layanan.dasarHukum}
-            </div>
+            <div 
+              className="prose-content text-slate-600"
+              dangerouslySetInnerHTML={{ __html: layanan.dasarHukum }}
+            />
           </div>
         )}
 
@@ -149,9 +150,10 @@ export default async function LayananDetailPage({ params }: Props) {
               <CheckCircle2 className="w-6 h-6 text-success-500" />
               Persyaratan Pelayanan
             </h2>
-            <div className="prose-content whitespace-pre-line text-slate-600">
-              {layanan.persyaratan}
-            </div>
+            <div 
+              className="prose-content text-slate-600"
+              dangerouslySetInnerHTML={{ __html: layanan.persyaratan }}
+            />
           </div>
         )}
 
@@ -165,9 +167,10 @@ export default async function LayananDetailPage({ params }: Props) {
               <ListOrdered className="w-6 h-6 text-primary-500" />
               Sistem, Mekanisme, dan Prosedur
             </h2>
-            <div className="prose-content whitespace-pre-line text-slate-600">
-              {layanan.prosedur}
-            </div>
+            <div 
+              className="prose-content text-slate-600"
+              dangerouslySetInnerHTML={{ __html: layanan.prosedur }}
+            />
           </div>
         )}
 
@@ -181,9 +184,10 @@ export default async function LayananDetailPage({ params }: Props) {
               <Gift className="w-6 h-6 text-amber-500" />
               Produk Pelayanan
             </h2>
-            <div className="prose-content whitespace-pre-line text-slate-600">
-              {layanan.produkLayanan}
-            </div>
+            <div 
+              className="prose-content text-slate-600"
+              dangerouslySetInnerHTML={{ __html: layanan.produkLayanan }}
+            />
           </div>
         )}
 
@@ -197,9 +201,10 @@ export default async function LayananDetailPage({ params }: Props) {
               <AlertTriangle className="w-6 h-6 text-red-500" />
               Penanganan Pengaduan, Saran, dan Masukan
             </h2>
-            <div className="prose-content whitespace-pre-line text-slate-600">
-              {layanan.pengaduan}
-            </div>
+            <div 
+              className="prose-content text-slate-600"
+              dangerouslySetInnerHTML={{ __html: layanan.pengaduan }}
+            />
           </div>
         )}
 

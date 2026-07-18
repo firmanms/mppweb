@@ -80,7 +80,10 @@ export default async function FasilitasPage() {
                 </div>
                 <h3 className="text-lg font-bold text-slate-900 mb-2">{fas.nama}</h3>
                 {fas.deskripsi && (
-                  <p className="text-sm text-slate-500 mb-3 line-clamp-3">{fas.deskripsi}</p>
+                  <div 
+                    className="prose-content text-sm text-slate-500 mb-3 line-clamp-3" 
+                    dangerouslySetInnerHTML={{ __html: fas.deskripsi }} 
+                  />
                 )}
                 {fas.lokasi && (
                   <span className="inline-flex items-center gap-1.5 text-xs text-slate-400 bg-slate-50 px-3 py-1.5 rounded-full">

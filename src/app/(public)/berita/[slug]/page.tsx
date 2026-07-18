@@ -48,8 +48,12 @@ export default async function BeritaDetailPage({ params }: Props) {
         {/* Article */}
         <article className="bg-white rounded-2xl shadow-soft border border-slate-100 overflow-hidden">
           {/* Hero Image */}
-          <div className="h-64 sm:h-80 bg-gradient-to-br from-primary-500 to-primary-800 flex items-center justify-center relative">
-            <FileText className="w-20 h-20 text-white/20" />
+          <div className="h-64 sm:h-80 bg-gradient-to-br from-primary-500 to-primary-800 flex items-center justify-center relative overflow-hidden">
+            {berita.fotoUtama ? (
+              <img src={berita.fotoUtama} alt={berita.judul} className="w-full h-full object-cover opacity-90" />
+            ) : (
+              <FileText className="w-20 h-20 text-white/20" />
+            )}
             <div className="absolute bottom-6 left-6 flex gap-2">
               <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-white text-sm font-semibold">
                 {berita.kategori?.nama || "-"}

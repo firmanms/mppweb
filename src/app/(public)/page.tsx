@@ -57,7 +57,7 @@ async function getHomeData() {
     mapsUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.0!2d107.5!3d-7.0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMDAnMDAuMCJTIDEwN8KwMzAnMDAuMCJF!5e0!3m2!1sid!2sid!4v1",
   };
 
-  const finalPengaturan = dbPengaturan || defaultPengaturan;
+  const finalPengaturan = dbPengaturan || (defaultPengaturan as any);
 
   return {
     instansiCount,
@@ -76,10 +76,10 @@ export default async function HomePage() {
 
   // Helper function to resolve Unsplash images if local media doesn't exist
   const getMediaUrl = (item: any, type: "news" | "gallery" | "building") => {
-    if (item.mediaUrl && item.mediaUrl.startsWith("http")) {
+    if (item.mediaUrl && (item.mediaUrl.startsWith("http") || item.mediaUrl.startsWith("/") || item.mediaUrl.startsWith("data:"))) {
       return item.mediaUrl;
     }
-    if (item.fotoUtama && item.fotoUtama.startsWith("http")) {
+    if (item.fotoUtama && (item.fotoUtama.startsWith("http") || item.fotoUtama.startsWith("/") || item.fotoUtama.startsWith("data:"))) {
       return item.fotoUtama;
     }
     const galleryFallbacks = [
