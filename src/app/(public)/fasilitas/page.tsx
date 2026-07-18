@@ -75,6 +75,11 @@ export default async function FasilitasPage() {
                 key={fas.id}
                 className="group bg-white rounded-2xl border border-slate-100 p-6 hover:border-accent-200 hover:shadow-elevated transition-all duration-300 hover:-translate-y-1"
               >
+                {fas.foto && (
+                  <div className="w-full aspect-[16/9] mb-5 rounded-xl overflow-hidden bg-slate-100">
+                    <img src={fas.foto} alt={fas.nama} className="w-full h-full object-cover" />
+                  </div>
+                )}
                 <div className="w-14 h-14 rounded-2xl bg-accent-50 flex items-center justify-center mb-5 group-hover:bg-accent-100 transition-colors">
                   <IconComp className="w-7 h-7 text-accent-600" />
                 </div>

@@ -1,0 +1,1 @@
+ALTER TABLE Layanan ADD COLUMN jamOperasional VARCHAR(191) NULL;

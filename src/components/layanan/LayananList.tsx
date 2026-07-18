@@ -13,6 +13,7 @@ type Layanan = {
   status: string;
   waktuPenyelesaian: string | null;
   biaya: string | null;
+  jamOperasional: string | null;
   populer: boolean;
   instansi: { nama: string; slug: string };
 };
@@ -118,10 +119,16 @@ export default function LayananList({
               <h3 className="font-bold text-slate-900 group-hover:text-primary-700 transition-colors mb-2 line-clamp-2">
                 {lay.nama}
               </h3>
-              <p className="text-sm text-slate-500 mb-3 flex items-center gap-1.5">
+              <p className="text-sm text-slate-500 mb-2 flex items-center gap-1.5">
                 <Building2 className="w-3.5 h-3.5" />
                 {lay.instansi.nama}
               </p>
+              {lay.jamOperasional && (
+                <p className="text-xs text-slate-500 mb-3 flex items-start gap-1.5 line-clamp-1">
+                  <Clock className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                  {lay.jamOperasional.replace(/\r?\n/g, ' | ')}
+                </p>
+              )}
               <div className="flex items-center gap-3 text-xs">
                 <span
                   className={`px-2.5 py-1 rounded-full font-semibold ${

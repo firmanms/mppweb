@@ -111,6 +111,15 @@ export default async function LayananDetailPage({ params }: Props) {
                 <p className="text-sm text-slate-700 font-medium">{layanan.biaya || "Gratis"}</p>
               </div>
             </div>
+            {layanan.jamOperasional && (
+              <div className="flex items-start gap-3 bg-slate-50 rounded-xl p-4">
+                <Clock className="w-5 h-5 text-primary-500 shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-slate-400 font-semibold">Jam Operasional</p>
+                  <p className="text-sm text-slate-700 font-medium whitespace-pre-line">{layanan.jamOperasional}</p>
+                </div>
+              </div>
+            )}
             {layanan.instansi.lokasiLoket && (
               <div className="flex items-center gap-3 bg-slate-50 rounded-xl p-4">
                 <MapPin className="w-5 h-5 text-primary-500 shrink-0" />

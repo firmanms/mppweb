@@ -40,6 +40,7 @@ model Layanan {
   kategori          Kategori? @relation(fields: [kategoriId], references: [id], onDelete: SetNull)
   status            String   @default("gratis") // gratis / berbayar
   linkDaring        String?
+  jamOperasional    String?
   populer           Boolean  @default(false)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt

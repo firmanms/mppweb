@@ -10,12 +10,20 @@ export default async function PublicLayout({
 }) {
   const pengaturan = await prisma.pengaturan.findUnique({
     where: { id: 1 },
-    select: { logoWebsite: true },
+    select: { 
+      logoWebsite: true,
+      nomorWa: true,
+      jamOperasional: true,
+    },
   });
 
   return (
     <>
-      <Header logoUrl={pengaturan?.logoWebsite || undefined} />
+      <Header 
+        logoUrl={pengaturan?.logoWebsite || undefined} 
+        nomorWa={pengaturan?.nomorWa || undefined}
+        jamOperasional={pengaturan?.jamOperasional || undefined}
+      />
       <main className="flex-1">{children}</main>
       <Footer />
       <WhatsAppButton />

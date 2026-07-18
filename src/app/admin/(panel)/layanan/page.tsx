@@ -46,6 +46,7 @@ type Layanan = {
   kategori?: { id: number; nama: string } | null;
   status: string;
   linkDaring: string | null;
+  jamOperasional: string | null;
   populer: boolean;
 };
 
@@ -77,6 +78,7 @@ export default function AdminLayananPage() {
   const [kategoriId, setKategoriId] = useState<number>(0);
   const [status, setStatus] = useState("gratis");
   const [linkDaring, setLinkDaring] = useState("");
+  const [jamOperasional, setJamOperasional] = useState("");
   const [populer, setPopuler] = useState(false);
 
   const fetchData = async () => {
@@ -121,6 +123,7 @@ export default function AdminLayananPage() {
     if (kategoriList.length > 0) setKategoriId(kategoriList[0].id);
     setStatus("gratis");
     setLinkDaring("");
+    setJamOperasional("");
     setPopuler(false);
     setIsModalOpen(true);
   };
@@ -140,6 +143,7 @@ export default function AdminLayananPage() {
     setKategoriId(item.kategoriId || (kategoriList.length > 0 ? kategoriList[0].id : 0));
     setStatus(item.status);
     setLinkDaring(item.linkDaring || "");
+    setJamOperasional(item.jamOperasional || "");
     setPopuler(item.populer);
     setIsModalOpen(true);
   };
@@ -166,6 +170,7 @@ export default function AdminLayananPage() {
         kategoriId: kategoriId || undefined,
         status,
         linkDaring: linkDaring || undefined,
+        jamOperasional: jamOperasional || undefined,
         populer,
       };
 
@@ -444,6 +449,17 @@ export default function AdminLayananPage() {
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-1">Jam Operasional</label>
+                <textarea
+                  value={jamOperasional}
+                  onChange={(e) => setJamOperasional(e.target.value)}
+                  rows={3}
+                  placeholder="Contoh:&#10;Senin - Kamis: 08:00 - 15:00 WIB&#10;Jumat: 08:00 - 11:30 WIB"
+                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm resize-none"
+                />
               </div>
 
               <div className="grid grid-cols-2 gap-4">

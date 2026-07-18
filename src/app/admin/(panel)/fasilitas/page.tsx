@@ -237,8 +237,13 @@ export default function AdminFasilitasPage() {
               className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm hover:shadow-md transition-shadow relative flex flex-col justify-between"
             >
               <div>
+                {item.foto && (
+                  <div className="w-full aspect-[16/9] mb-4 rounded-xl overflow-hidden bg-slate-100">
+                    <img src={item.foto} alt={item.nama} className="w-full h-full object-cover" />
+                  </div>
+                )}
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-semibold">
+                  <div className="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-semibold shrink-0">
                     {(() => {
                       const icons: any = { Star, Armchair, TicketCheck, ListOrdered, Info, Baby, Accessibility, Blocks, Moon, Bath, Car, Wifi, BatteryCharging, UtensilsCrossed };
                       const Icon = icons[item.ikon || "Star"] || Star;
@@ -270,7 +275,10 @@ export default function AdminFasilitasPage() {
                   </p>
                 )}
                 {item.deskripsi && (
-                  <p className="text-sm text-slate-500 line-clamp-3">{item.deskripsi}</p>
+                  <div 
+                    className="prose-content text-sm text-slate-500 line-clamp-3" 
+                    dangerouslySetInnerHTML={{ __html: item.deskripsi }} 
+                  />
                 )}
               </div>
             </div>
@@ -336,10 +344,10 @@ export default function AdminFasilitasPage() {
                 </div>
               </div>
 
-              <ImageUploader 
-                label="Foto Aset (Opsional)" 
-                value={foto} 
-                onChange={setFoto} 
+              <ImageUploader
+                label="Foto Aset (Opsional)"
+                value={foto}
+                onChange={setFoto}
               />
 
               <div>

@@ -22,7 +22,15 @@ const navLinks = [
   { href: "/mpp-digital", label: "MPP Digital" },
 ];
 
-export default function Header({ logoUrl }: { logoUrl?: string }) {
+export default function Header({ 
+  logoUrl,
+  nomorWa,
+  jamOperasional,
+}: { 
+  logoUrl?: string;
+  nomorWa?: string;
+  jamOperasional?: string;
+}) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -52,10 +60,10 @@ export default function Header({ logoUrl }: { logoUrl?: string }) {
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5">
               <Phone className="w-3.5 h-3.5" />
-              (022) 589-1234
+              {nomorWa || "(022) 589-1234"}
             </span>
             <span className="text-primary-300">|</span>
-            <span>Senin - Jumat: 08.00 - 15.00 WIB</span>
+            <span>{jamOperasional ? jamOperasional.replace(/\r?\n/g, " | ") : "Senin - Jumat: 08.00 - 15.00 WIB"}</span>
           </div>
           <div className="flex items-center gap-3">
             <Link href="/mpp-digital" className="hover:text-accent-300 transition-colors">

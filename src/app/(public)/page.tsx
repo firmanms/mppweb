@@ -218,13 +218,13 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 md:pl-6 pt-4 md:pt-0">
+              <div className="flex items-start gap-4 md:pl-6 pt-4 md:pt-0">
                 <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
                   <Icons.Clock className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-slate-900 leading-tight">08.00 - 16.00</p>
-                  <p className="text-slate-400 text-xs mt-0.5">Jam Operasional (Senin - Jumat)</p>
+                  <p className="text-sm font-bold text-slate-900 leading-tight whitespace-pre-line">{data.pengaturan.jamOperasional}</p>
+                  <p className="text-slate-400 text-xs mt-1">Jam Operasional</p>
                 </div>
               </div>
             </div>
@@ -331,6 +331,12 @@ export default async function HomePage() {
                             {layanan.nama}
                           </h4>
                           <p className="text-[11px] text-slate-400 line-clamp-1">{layanan.instansi.nama}</p>
+                          {layanan.jamOperasional && (
+                            <p className="text-[10px] text-slate-500 mt-0.5 line-clamp-1 flex items-center gap-1">
+                              <Icons.Clock className="w-3 h-3" />
+                              {layanan.jamOperasional.replace(/\r?\n/g, ' | ')}
+                            </p>
+                          )}
                         </div>
                       </div>
                       <div className="text-right shrink-0">

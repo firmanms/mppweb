@@ -25,6 +25,7 @@ export async function createLayanan(data: {
   kategoriId?: number;
   status: string;
   linkDaring?: string;
+  jamOperasional?: string;
   populer?: boolean;
 }) {
   const baseSlug = slugify(data.nama);
@@ -54,6 +55,7 @@ export async function createLayanan(data: {
       kategoriId: data.kategoriId || null,
       status: data.status,
       linkDaring: data.linkDaring || null,
+      jamOperasional: data.jamOperasional || null,
       populer: data.populer ?? false,
     },
   });
@@ -80,6 +82,7 @@ export async function updateLayanan(
     kategoriId?: number;
     status: string;
     linkDaring?: string;
+    jamOperasional?: string;
     populer?: boolean;
   }
 ) {
@@ -124,6 +127,7 @@ export async function updateLayanan(
       kategoriId: data.kategoriId || null,
       status: data.status,
       linkDaring: data.linkDaring || null,
+      jamOperasional: data.jamOperasional || null,
       populer: data.populer ?? false,
     },
   });
