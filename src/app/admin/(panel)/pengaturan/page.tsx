@@ -14,6 +14,7 @@ import {
   AlertCircle,
   CheckCircle,
   Globe,
+  Database,
 } from "lucide-react";
 import { getPengaturan, updatePengaturan } from "@/app/actions/pengaturan";
 
@@ -24,7 +25,7 @@ type HalamanStatis = {
 };
 
 export default function AdminPengaturanPage() {
-  const [activeTab, setActiveTab] = useState<"website" | "profil" | "password">("website");
+  const [activeTab, setActiveTab] = useState<"website" | "profil" | "penyimpanan" | "password">("website");
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -52,6 +53,13 @@ export default function AdminPengaturanPage() {
     instagramUrl: "",
     twitterUrl: "",
     youtubeUrl: "",
+    uploadProvider: "local",
+    s3Endpoint: "",
+    s3Region: "",
+    s3AccessKey: "",
+    s3SecretKey: "",
+    s3BucketName: "",
+    s3PublicUrl: "",
   });
 
   const fetchData = async () => {
@@ -79,6 +87,13 @@ export default function AdminPengaturanPage() {
           instagramUrl: pData.instagramUrl || "",
           twitterUrl: pData.twitterUrl || "",
           youtubeUrl: pData.youtubeUrl || "",
+          uploadProvider: pData.uploadProvider || "local",
+          s3Endpoint: pData.s3Endpoint || "",
+          s3Region: pData.s3Region || "",
+          s3AccessKey: pData.s3AccessKey || "",
+          s3SecretKey: pData.s3SecretKey || "",
+          s3BucketName: pData.s3BucketName || "",
+          s3PublicUrl: pData.s3PublicUrl || "",
         });
       }
     } catch (err: any) {
@@ -211,6 +226,21 @@ export default function AdminPengaturanPage() {
         >
           <FileText className="w-4 h-4" />
           Halaman Profil
+        </button>
+
+        <button
+          onClick={() => {
+            setActiveTab("penyimpanan");
+            setError(null);
+          }}
+          className={`flex items-center gap-2 px-6 py-3 border-b-2 font-semibold text-sm transition-all whitespace-nowrap ${
+            activeTab === "penyimpanan"
+              ? "border-primary-500 text-primary-600"
+              : "border-transparent text-slate-500 hover:text-slate-700"
+          }`}
+        >
+          <Database className="w-4 h-4" />
+          Penyimpanan
         </button>
 
         <button
@@ -410,6 +440,133 @@ export default function AdminPengaturanPage() {
           )}
 
 
+
+          {/* Penyimpanan Tab */}
+          {activeTab === "penyimpanan" && (
+            <form onSubmit={handleSavePengaturan} className="space-y-8 max-w-2xl">
+              <div>
+                <h3 className="text-lg font-bold text-slate-800 border-b border-slate-100 pb-2 mb-6">Metode Penyimpanan</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <label className={`border-2 rounded-xl p-4 cursor-pointer transition-colors ${pengaturanData.uploadProvider === "local" ? "border-primary-500 bg-primary-50" : "border-slate-200 hover:border-slate-300"}`}>
+                    <div className="flex items-center gap-3 mb-2">
+                      <input 
+                        type="radio" 
+                        name="uploadProvider" 
+                        value="local"
+                        checked={pengaturanData.uploadProvider === "local"}
+                        onChange={(e) => setPengaturanData({ ...pengaturanData, uploadProvider: e.target.value })}
+                        className="w-4 h-4 text-primary-600"
+                      />
+                      <span className="font-bold text-slate-900">Lokal (Server)</span>
+                    </div>
+                    <p className="text-xs text-slate-500 ml-7">File disimpan di dalam folder public/uploads di server aplikasi.</p>
+                  </label>
+
+                  <label className={`border-2 rounded-xl p-4 cursor-pointer transition-colors ${pengaturanData.uploadProvider === "s3" ? "border-primary-500 bg-primary-50" : "border-slate-200 hover:border-slate-300"}`}>
+                    <div className="flex items-center gap-3 mb-2">
+                      <input 
+                        type="radio" 
+                        name="uploadProvider" 
+                        value="s3"
+                        checked={pengaturanData.uploadProvider === "s3"}
+                        onChange={(e) => setPengaturanData({ ...pengaturanData, uploadProvider: e.target.value })}
+                        className="w-4 h-4 text-primary-600"
+                      />
+                      <span className="font-bold text-slate-900">S3 / MinIO</span>
+                    </div>
+                    <p className="text-xs text-slate-500 ml-7">File disimpan di cloud storage atau S3-compatible service seperti MinIO.</p>
+                  </label>
+                </div>
+              </div>
+
+              {pengaturanData.uploadProvider === "s3" && (
+                <div className="space-y-5 bg-slate-50 p-6 rounded-xl border border-slate-200">
+                  <h4 className="font-bold text-slate-800 mb-2">Kredensial S3</h4>
+                  
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Endpoint URL</label>
+                    <input
+                      type="url"
+                      value={pengaturanData.s3Endpoint}
+                      onChange={(e) => setPengaturanData({ ...pengaturanData, s3Endpoint: e.target.value })}
+                      placeholder="https://s3.ap-southeast-1.amazonaws.com"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white"
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">Region</label>
+                      <input
+                        type="text"
+                        value={pengaturanData.s3Region}
+                        onChange={(e) => setPengaturanData({ ...pengaturanData, s3Region: e.target.value })}
+                        placeholder="ap-southeast-1"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">Nama Bucket</label>
+                      <input
+                        type="text"
+                        value={pengaturanData.s3BucketName}
+                        onChange={(e) => setPengaturanData({ ...pengaturanData, s3BucketName: e.target.value })}
+                        placeholder="mpp-bucket"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Access Key ID</label>
+                    <input
+                      type="text"
+                      value={pengaturanData.s3AccessKey}
+                      onChange={(e) => setPengaturanData({ ...pengaturanData, s3AccessKey: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Secret Access Key</label>
+                    <input
+                      type="password"
+                      value={pengaturanData.s3SecretKey}
+                      onChange={(e) => setPengaturanData({ ...pengaturanData, s3SecretKey: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Public Base URL</label>
+                    <input
+                      type="url"
+                      value={pengaturanData.s3PublicUrl}
+                      onChange={(e) => setPengaturanData({ ...pengaturanData, s3PublicUrl: e.target.value })}
+                      placeholder="https://mpp-bucket.s3.amazonaws.com"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white"
+                    />
+                    <p className="text-xs text-slate-500 mt-2">Gunakan path ke bucket. Path file gambar akan ditambahkan di belakang URL ini.</p>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex justify-end pt-4 border-t border-slate-100">
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white gradient-primary shadow-md hover:opacity-90 transition-opacity disabled:opacity-50"
+                >
+                  {submitting ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Save className="w-4 h-4" />
+                  )}
+                  Simpan Pengaturan
+                </button>
+              </div>
+            </form>
+          )}
 
           {/* Keamanan Tab */}
           {activeTab === "password" && (

@@ -142,5 +142,15 @@ model Pengaturan {
   instagramUrl    String?
   twitterUrl      String?
   youtubeUrl      String?
+  
+  // Penyimpanan (Storage)
+  uploadProvider  String   @default("local") // "local" atau "s3"
+  s3Endpoint      String?
+  s3Region        String?
+  s3AccessKey     String?
+  s3SecretKey     String?
+  s3BucketName    String?
+  s3PublicUrl     String?
+
   updatedAt       DateTime @updatedAt
 }

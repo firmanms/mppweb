@@ -23,6 +23,13 @@ export async function getPengaturan() {
         instagramUrl: "https://instagram.com/mppkabbandung",
         twitterUrl: "https://twitter.com/mppkabbandung",
         youtubeUrl: "https://youtube.com/mppkabbandung",
+        uploadProvider: "local",
+        s3Endpoint: "",
+        s3Region: "",
+        s3AccessKey: "",
+        s3SecretKey: "",
+        s3BucketName: "",
+        s3PublicUrl: "",
       },
     });
   }
