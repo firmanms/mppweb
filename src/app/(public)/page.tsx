@@ -116,11 +116,11 @@ export default async function HomePage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <div className="space-y-8 animate-fade-in-up">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-50 border border-primary-100 text-sm font-semibold text-primary-600">
+              {/* <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-50 border border-primary-100 text-sm font-semibold text-primary-600">
                 <Icons.Landmark className="w-4 h-4 text-primary-500" />
                 Pusat Pelayanan Terpadu Kabupaten Bandung
-              </div>
-              <h1 
+              </div> */}
+              <h1
                 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-slate-900 tracking-tight"
                 style={{ fontFamily: "var(--font-heading)" }}
               >
@@ -583,7 +583,7 @@ export default async function HomePage() {
                 <Icons.MoveUpRight className="w-4 h-4" />
               </Link>
             </div>
-            
+
             {/* Virtual Hotspots / Pins decoration */}
             <div className="absolute right-[23%] top-[28%] w-12 h-12 rounded-full bg-white text-primary-600 flex items-center justify-center shadow-lg border-[6px] border-white/20 animate-pulse hidden md:flex">
               <Icons.MapPin className="w-5 h-5" />
