@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Instansi {
+  id           Int       @id @default(autoincrement())
+  nama         String
+  slug         String    @unique
+  logo         String?
+  deskripsi    String?   @db.Text
+  kategoriId   Int?
+  kategori     Kategori? @relation(fields: [kategoriId], references: [id], onDelete: SetNull)
+  lokasiLoket  String?
+  jamPelayanan String?
+  kontak       String?
+  layanan      Layanan[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Layanan {
+  id                Int      @id @default(autoincrement())
+  nama              String
+  slug              String   @unique
+  instansiId        Int
+  instansi          Instansi @relation(fields: [instansiId], references: [id], onDelete: Cascade)
+  deskripsi         String?  @db.Text
+  dasarHukum        String?  @db.Text
+  persyaratan       String?  @db.Text
+  prosedur          String?  @db.Text
+  waktuPenyelesaian String?
+  biaya             String?
+  produkLayanan     String?  @db.Text
+  pengaduan         String?  @db.Text
+  kategoriId        Int?
+  kategori          Kategori? @relation(fields: [kategoriId], references: [id], onDelete: SetNull)
+  status            String   @default("gratis") // gratis / berbayar
+  linkDaring        String?
+  populer           Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Fasilitas {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  slug      String   @unique
+  foto      String?
+  deskripsi String?  @db.Text
+  lokasi    String?
+  ikon      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Berita {
+  id          Int      @id @default(autoincrement())
+  judul       String
+  slug        String   @unique
+  kategoriId  Int?
+  kategori    Kategori? @relation(fields: [kategoriId], references: [id], onDelete: SetNull)
+  konten      String   @db.Text
+  ringkasan   String?  @db.Text
+  fotoUtama   String?
+  featured    Boolean  @default(false)
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Galeri {
+  id        Int      @id @default(autoincrement())
+  judul     String
+  kategoriId Int?
+  kategori   Kategori? @relation(fields: [kategoriId], references: [id], onDelete: SetNull)
+  mediaUrl  String
+  tipeMedia String   // foto / video
+  deskripsi String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HalamanStatis {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique // profil, sakti, dll
+  judul     String
+  konten    String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PesanSaran {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  email     String?
+  telepon   String?
+  subjek    String?
+  pesan     String   @db.Text
+  dibaca    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model AdminUser {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  email     String   @unique
+  password  String
+  role      String   @default("editor") // superadmin, editor
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Kategori {
+  id        Int        @id @default(autoincrement())
+  nama      String
+  slug      String
+  tipe      String     // instansi, layanan, berita, galeri
+  instansi  Instansi[]
+  layanan   Layanan[]
+  berita    Berita[]
+  galeri    Galeri[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@unique([tipe, slug])
+}
+
+model Pengaturan {
+  id              Int      @id @default(1)
+  headerTitle     String?
+  headerSubtitle  String?  @db.Text
+  ratingKepuasan  String?
+  alamat          String?  @db.Text
+  jamOperasional  String?  @db.Text
+  nomorWa         String?
+  mapsUrl         String?  @db.Text
+  facebookUrl     String?
+  instagramUrl    String?
+  twitterUrl      String?
+  youtubeUrl      String?
+  updatedAt       DateTime @updatedAt
+}
