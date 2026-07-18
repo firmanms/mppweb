@@ -1,33 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { kirimPesan } from "@/app/actions/pesan";
-import { Send, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
+import { Send, CheckCircle2 } from "lucide-react";
+import MathCaptcha from "@/components/ui/MathCaptcha";
 
 export default function KritikSaranForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errors, setErrors] = useState<Record<string, string[]>>({});
-  
-  const [captcha, setCaptcha] = useState({ num1: 0, num2: 0, sum: 0 });
-  const [captchaInput, setCaptchaInput] = useState("");
-  const [mounted, setMounted] = useState(false);
+  const [isCaptchaValid, setIsCaptchaValid] = useState(false);
+  const [key, setKey] = useState(0); // For forcing MathCaptcha reset
 
-  useEffect(() => {
-    generateCaptcha();
-    setMounted(true);
-  }, []);
-
-  function generateCaptcha() {
-    const n1 = Math.floor(Math.random() * 9) + 1;
-    const n2 = Math.floor(Math.random() * 9) + 1;
-    setCaptcha({ num1: n1, num2: n2, sum: n1 + n2 });
-    setCaptchaInput("");
-  }
 
   async function handleSubmit(formData: FormData) {
-    if (parseInt(captchaInput) !== captcha.sum) {
-      setErrors({ captcha: ["Jawaban CAPTCHA salah! Silakan coba lagi."] });
-      generateCaptcha();
+    if (!isCaptchaValid) {
+      setErrors({ captcha: ["Jawaban CAPTCHA salah! Silakan periksa kembali."] });
       return;
     }
 
@@ -38,14 +25,14 @@ export default function KritikSaranForm() {
 
     if (result.success) {
       setStatus("success");
-      generateCaptcha();
+      setKey((prev) => prev + 1); // Reset captcha
       // Reset form
       const form = document.getElementById("kritik-saran-form") as HTMLFormElement;
       form?.reset();
     } else {
       setStatus("error");
       setErrors(result.errors || {});
-      generateCaptcha();
+      setKey((prev) => prev + 1); // Reset captcha
     }
   }
 
@@ -149,37 +136,9 @@ export default function KritikSaranForm() {
             {errors.pesan && <p className="text-red-500 text-xs mt-1">{errors.pesan[0]}</p>}
           </div>
 
-          {mounted && (
-            <div className="mb-6">
-              <label htmlFor="captcha" className="block text-sm font-semibold text-slate-700 mb-2">
-                Verifikasi Keamanan (CAPTCHA) <span className="text-red-500">*</span>
-              </label>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center bg-slate-100 border border-slate-200 text-slate-700 font-bold px-4 py-3 rounded-xl select-none tracking-widest text-lg min-w-[110px] h-[50px]">
-                  {captcha.num1} + {captcha.num2} = ?
-                </div>
-                <button
-                  type="button"
-                  onClick={generateCaptcha}
-                  className="p-3 text-slate-500 hover:text-primary-600 rounded-xl hover:bg-slate-50 border border-slate-200 h-[50px] w-[50px] flex items-center justify-center shrink-0 transition-colors"
-                  title="Ganti CAPTCHA"
-                >
-                  <RefreshCw className="w-4 h-4" />
-                </button>
-                <input
-                  type="number"
-                  id="captcha"
-                  name="captcha"
-                  required
-                  value={captchaInput}
-                  onChange={(e) => setCaptchaInput(e.target.value)}
-                  className="flex-1 px-4 py-3 rounded-xl border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent h-[50px]"
-                  placeholder="Masukkan jawaban"
-                />
-              </div>
-              {errors.captcha && <p className="text-red-500 text-xs mt-1">{errors.captcha[0]}</p>}
-            </div>
-          )}
+          <MathCaptcha key={key} onValidate={(valid) => setIsCaptchaValid(valid)} />
+          {errors.captcha && <p className="text-red-500 text-xs mt-1 mb-4">{errors.captcha[0]}</p>}
+
           <button
             type="submit"
             disabled={status === "loading"}

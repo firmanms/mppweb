@@ -20,6 +20,7 @@ import {
   AlertCircle,
   CheckCircle,
 } from "lucide-react";
+import ImageUploader from "@/components/ui/ImageUploader";
 
 type Galeri = {
   id: number;
@@ -314,19 +315,28 @@ export default function AdminGaleriPage() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1">
-                  Media URL <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={mediaUrl}
-                  onChange={(e) => setMediaUrl(e.target.value)}
-                  placeholder="Contoh: /images/galeri/kunjungan.jpg atau Link Youtube"
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+              {tipeMedia === "foto" ? (
+                <ImageUploader 
+                  label="Foto Galeri" 
+                  value={mediaUrl} 
+                  onChange={setMediaUrl} 
+                  required 
                 />
-              </div>
+              ) : (
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-1">
+                    Video URL <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={mediaUrl}
+                    onChange={(e) => setMediaUrl(e.target.value)}
+                    placeholder="Contoh: https://youtube.com/watch?v=..."
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                  />
+                </div>
+              )}
 
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-1">Deskripsi Singkat</label>

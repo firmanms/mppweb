@@ -3,33 +3,20 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { login } from "@/app/actions/auth";
-import { Building2, LogIn, AlertCircle, RefreshCw } from "lucide-react";
+import { Building2, LogIn, AlertCircle } from "lucide-react";
+import MathCaptcha from "@/components/ui/MathCaptcha";
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const [captcha, setCaptcha] = useState({ num1: 0, num2: 0, sum: 0 });
-  const [captchaInput, setCaptchaInput] = useState("");
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    generateCaptcha();
-    setMounted(true);
-  }, []);
-
-  function generateCaptcha() {
-    const n1 = Math.floor(Math.random() * 9) + 1;
-    const n2 = Math.floor(Math.random() * 9) + 1;
-    setCaptcha({ num1: n1, num2: n2, sum: n1 + n2 });
-    setCaptchaInput("");
-  }
+  const [isCaptchaValid, setIsCaptchaValid] = useState(false);
+  const [key, setKey] = useState(0); // For forcing MathCaptcha reset
 
   async function handleSubmit(formData: FormData) {
-    if (parseInt(captchaInput) !== captcha.sum) {
+    if (!isCaptchaValid) {
       setError("Jawaban CAPTCHA salah!");
-      generateCaptcha();
       return;
     }
 
@@ -44,7 +31,7 @@ export default function LoginPage() {
     } else {
       setError(result.error || "Login gagal");
       setLoading(false);
-      generateCaptcha();
+      setKey((prev) => prev + 1);
     }
   }
 
@@ -100,36 +87,7 @@ export default function LoginPage() {
                 placeholder="••••••••"
               />
             </div>
-            {mounted && (
-              <div>
-                <label htmlFor="captcha" className="block text-sm font-semibold text-slate-700 mb-2">
-                  Verifikasi CAPTCHA <span className="text-red-500">*</span>
-                </label>
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center bg-slate-100 border border-slate-200 text-slate-700 font-bold px-3 py-2 rounded-xl select-none tracking-wider text-base min-w-[90px] h-[46px]">
-                    {captcha.num1} + {captcha.num2} = ?
-                  </div>
-                  <button
-                    type="button"
-                    onClick={generateCaptcha}
-                    className="p-2 text-slate-500 hover:text-primary-600 rounded-xl hover:bg-slate-50 border border-slate-200 h-[46px] w-[46px] flex items-center justify-center shrink-0"
-                    title="Ganti CAPTCHA"
-                  >
-                    <RefreshCw className="w-4 h-4" />
-                  </button>
-                  <input
-                    type="number"
-                    id="captcha"
-                    name="captcha"
-                    required
-                    value={captchaInput}
-                    onChange={(e) => setCaptchaInput(e.target.value)}
-                    className="flex-1 px-4 py-2 rounded-xl border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent h-[46px]"
-                    placeholder="Jawaban"
-                  />
-                </div>
-              </div>
-            )}
+            <MathCaptcha key={key} onValidate={(valid) => setIsCaptchaValid(valid)} />
             <button
               type="submit"
               disabled={loading}

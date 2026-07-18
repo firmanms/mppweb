@@ -19,6 +19,7 @@ import {
   AlertCircle,
   CheckCircle,
 } from "lucide-react";
+import ImageUploader from "@/components/ui/ImageUploader";
 
 type Instansi = {
   id: number;
@@ -354,16 +355,11 @@ export default function AdminInstansiPage() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1">Logo URL (Opsional)</label>
-                <input
-                  type="text"
-                  value={logo}
-                  onChange={(e) => setLogo(e.target.value)}
-                  placeholder="/images/instansi/logo.png"
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
-                />
-              </div>
+              <ImageUploader 
+                label="Logo Instansi (Opsional)" 
+                value={logo} 
+                onChange={setLogo} 
+              />
 
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-1">Deskripsi</label>

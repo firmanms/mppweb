@@ -20,6 +20,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import ImageUploader from "@/components/ui/ImageUploader";
 
 type Berita = {
   id: number;
@@ -338,16 +339,11 @@ export default function AdminBeritaPage() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1">Foto Utama URL (Opsional)</label>
-                <input
-                  type="text"
-                  value={fotoUtama}
-                  onChange={(e) => setFotoUtama(e.target.value)}
-                  placeholder="/images/berita/utama.png"
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
-                />
-              </div>
+              <ImageUploader 
+                label="Foto Utama (Opsional)" 
+                value={fotoUtama} 
+                onChange={setFotoUtama} 
+              />
 
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-1">Ringkasan Singkat</label>
