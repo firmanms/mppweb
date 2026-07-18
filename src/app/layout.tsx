@@ -47,6 +47,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
+      suppressHydrationWarning
       className={`${inter.variable} ${plusJakarta.variable} h-full antialiased`}
     >
       <body

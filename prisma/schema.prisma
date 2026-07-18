@@ -143,6 +143,10 @@ model Pengaturan {
   twitterUrl      String?
   youtubeUrl      String?
   
+  // Teks Dinamis
+  teksProfilJudul String?
+  teksProfilDeskripsi String? @db.Text
+
   // Gambar-gambar dinamis
   logoWebsite     String?
   fotoHeader      String?

@@ -13,8 +13,10 @@ export async function getPengaturan() {
       data: {
         id: 1,
         headerTitle: "Pelayanan Publik Semakin Mudah, Cepat, dan Terintegrasi",
-        headerSubtitle: "Mal Pelayanan Publik Kabupaten Bandung menghadirkan berbagai layanan pemerintahan dan pelayanan publik dalam satu lokasi yang nyaman dan mudah diakses.",
-        ratingKepuasan: "4.8",
+        headerSubtitle: "Mal Pelayanan Publik Kabupaten Bandung menghadirkan berbagai layanan pemerintahan dalam satu tempat untuk Anda.",
+        ratingKepuasan: "98%",
+        teksProfilJudul: "Satu tempat untuk berbagai kebutuhan pelayanan publik",
+        teksProfilDeskripsi: "Mal Pelayanan Publik Kabupaten Bandung hadir sebagai pusat pelayanan terpadu yang mengintegrasikan instansi pemerintah, BUMN, BUMD, dan lembaga pelayanan publik lainnya.",
         alamat: "Jl. Raya Soreang KM. 17, Soreang, Kabupaten Bandung, Jawa Barat 40911",
         jamOperasional: "Senin - Kamis: 08.00 - 15.00 WIB\nJumat: 08.00 - 14.30 WIB\nSabtu - Minggu: Tutup",
         nomorWa: "081234567890",

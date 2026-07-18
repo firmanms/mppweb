@@ -159,7 +159,7 @@ export default async function HomePage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-lg border border-slate-100 p-4 flex items-center gap-3 animate-float">
+              {/* <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-lg border border-slate-100 p-4 flex items-center gap-3 animate-float">
                 <div className="w-10 h-10 rounded-xl bg-success-50 flex items-center justify-center">
                   <Icons.Shield className="w-5 h-5 text-success-600" />
                 </div>
@@ -167,7 +167,7 @@ export default async function HomePage() {
                   <p className="text-sm font-bold text-slate-800">Pelayanan Terintegrasi</p>
                   <p className="text-xs text-slate-400">Berbagai instansi dalam satu lokasi</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -456,10 +456,10 @@ export default async function HomePage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute right-0 bottom-0 w-[58%] bg-primary-600 text-white p-6 rounded-2xl shadow-xl">
+              {/* <div className="absolute right-0 bottom-0 w-[58%] bg-primary-600 text-white p-6 rounded-2xl shadow-xl">
                 <strong className="text-4xl font-extrabold block mb-1">236+</strong>
                 <p className="text-xs text-primary-100">Jenis layanan publik terintegrasi dalam satu lokasi.</p>
-              </div>
+              </div> */}
             </div>
 
             {/* Right Content Column */}
@@ -468,10 +468,10 @@ export default async function HomePage() {
                 <Icons.Info className="w-4 h-4" /> Profil MPP
               </span>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight" style={{ fontFamily: "var(--font-heading)" }}>
-                Satu tempat untuk berbagai kebutuhan pelayanan publik
+                {data.pengaturan.teksProfilJudul || "Satu tempat untuk berbagai kebutuhan pelayanan publik"}
               </h2>
-              <p className="text-slate-500 leading-relaxed">
-                Mal Pelayanan Publik Kabupaten Bandung hadir sebagai pusat pelayanan terpadu yang mengintegrasikan instansi pemerintah, BUMN, BUMD, dan lembaga pelayanan publik lainnya.
+              <p className="text-slate-500 leading-relaxed whitespace-pre-line">
+                {data.pengaturan.teksProfilDeskripsi || "Mal Pelayanan Publik Kabupaten Bandung hadir sebagai pusat pelayanan terpadu yang mengintegrasikan instansi pemerintah, BUMN, BUMD, dan lembaga pelayanan publik lainnya."}
               </p>
 
               <div className="space-y-4">
