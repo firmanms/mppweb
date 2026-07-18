@@ -31,6 +31,7 @@ export default async function AdminDashboard() {
   const beritaTerbaru = await prisma.berita.findMany({
     take: 5,
     orderBy: { publishedAt: "desc" },
+    include: { kategori: true },
   });
 
   const pesanBelumDibaca = await prisma.pesanSaran.count({ where: { dibaca: false } });
@@ -135,7 +136,7 @@ export default async function AdminDashboard() {
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-slate-800 truncate">{berita.judul}</p>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">{berita.kategori}</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">{berita.kategori?.nama || "-"}</span>
                       <span className="text-xs text-slate-400">{formatDate(berita.publishedAt)}</span>
                     </div>
                   </div>
