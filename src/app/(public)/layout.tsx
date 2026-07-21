@@ -1,6 +1,7 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
+import AccessibilityWidget from "@/components/ui/AccessibilityWidget";
 import prisma from "@/lib/prisma";
 
 export default async function PublicLayout({
@@ -27,6 +28,7 @@ export default async function PublicLayout({
       <main className="flex-1">{children}</main>
       <Footer />
       <WhatsAppButton />
+      <AccessibilityWidget />
     </>
   );
 }

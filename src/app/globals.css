@@ -377,3 +377,44 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-slate-400);
 }
+
+/* ===== Accessibility Modes ===== */
+
+/* High Contrast */
+.a11y-high-contrast {
+  filter: contrast(1.4);
+}
+.a11y-high-contrast body {
+  background: #000 !important;
+  color: #fff !important;
+}
+.a11y-high-contrast a,
+.a11y-high-contrast button {
+  outline: 2px solid #ffff00 !important;
+}
+
+/* Grayscale */
+.a11y-grayscale {
+  filter: grayscale(1);
+}
+
+/* Highlight Links */
+.a11y-highlight-links a {
+  background-color: #ffff00 !important;
+  color: #000 !important;
+  text-decoration: underline !important;
+  padding: 1px 3px;
+  border-radius: 3px;
+}
+
+/* Big Cursor */
+.a11y-big-cursor,
+.a11y-big-cursor * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24'%3E%3Cpath fill='black' stroke='white' stroke-width='1' d='M5.5 3.21V20.8l4.86-4.86h6.78L5.5 3.21z'/%3E%3C/svg%3E") 4 4, auto !important;
+}
+
+/* Line Height */
+.a11y-line-height * {
+  line-height: 2.2 !important;
+  letter-spacing: 0.05em !important;
+}
