@@ -12,9 +12,9 @@ import {
   MessageSquare,
   Settings,
   LogOut,
-  ChevronRight,
   FolderTree,
 } from "lucide-react";
+import AdminSidebar from "./AdminSidebar";
 
 const sidebarLinks = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -40,9 +40,9 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="flex h-screen bg-slate-50">
-      {/* Sidebar */}
-      <aside className="w-64 bg-slate-900 text-white flex flex-col shrink-0">
+    <div className="flex flex-col lg:flex-row h-screen bg-slate-50">
+      {/* Sidebar — AdminSidebar menangani toggle di mobile */}
+      <AdminSidebar>
         {/* Brand */}
         <div className="p-5 border-b border-slate-700/50">
           <Link href="/admin/dashboard" className="flex items-center gap-3">
@@ -95,14 +95,15 @@ export default async function AdminLayout({
             </button>
           </form>
         </div>
-      </aside>
+      </AdminSidebar>
 
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto">
-        <div className="p-6 lg:p-8">
+        <div className="p-4 sm:p-6 lg:p-8">
           {children}
         </div>
       </main>
     </div>
   );
 }
+
