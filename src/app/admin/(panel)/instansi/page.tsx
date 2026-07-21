@@ -236,8 +236,12 @@ export default function AdminInstansiPage() {
                   <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-primary-50 flex items-center justify-center shrink-0 text-primary-600 font-bold text-sm">
-                          {item.nama.charAt(0)}
+                        <div className="w-8 h-8 rounded-lg bg-white border border-slate-100 p-0.5 flex items-center justify-center shrink-0 text-primary-600 font-bold text-sm overflow-hidden">
+                          {item.logo ? (
+                            <img src={item.logo} alt={`Logo ${item.nama}`} className="w-full h-full object-contain" />
+                          ) : (
+                            item.nama.charAt(0)
+                          )}
                         </div>
                         <span className="font-semibold text-slate-800 text-sm line-clamp-1">{item.nama}</span>
                       </div>

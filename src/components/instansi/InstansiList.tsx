@@ -11,6 +11,7 @@ type Instansi = {
   kategoriId: number | null;
   kategori?: { id: number; nama: string } | null;
   deskripsi: string | null;
+  logo: string | null;
   lokasiLoket: string | null;
   jamPelayanan: string | null;
   _count: { layanan: number };
@@ -77,8 +78,12 @@ export default function InstansiList({ instansiList }: { instansiList: Instansi[
               className="group bg-white rounded-2xl border border-slate-100 p-6 hover:border-primary-200 hover:shadow-elevated transition-all duration-300 hover:-translate-y-1"
             >
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-14 h-14 rounded-xl bg-primary-50 flex items-center justify-center shrink-0 group-hover:bg-primary-100 transition-colors">
-                  <Building2 className="w-7 h-7 text-primary-600" />
+                <div className="w-14 h-14 rounded-xl bg-white border border-slate-100 p-1 flex items-center justify-center shrink-0 group-hover:border-primary-200 transition-colors overflow-hidden">
+                  {inst.logo ? (
+                    <img src={inst.logo} alt={`Logo ${inst.nama}`} className="w-full h-full object-contain" />
+                  ) : (
+                    <Building2 className="w-7 h-7 text-primary-600" />
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="font-bold text-slate-900 group-hover:text-primary-700 transition-colors line-clamp-2">

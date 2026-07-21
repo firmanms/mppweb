@@ -103,7 +103,6 @@ export default function LoginPage() {
           </form>
 
           <p className="text-xs text-slate-400 text-center mt-6">
-            Default: admin@mpp.bandungkab.go.id / admin123
           </p>
         </div>
       </div>

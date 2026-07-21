@@ -56,8 +56,12 @@ export default async function InstansiDetailPage({ params }: Props) {
         {/* Header Card */}
         <div className="bg-white rounded-2xl shadow-soft border border-slate-100 p-8 lg:p-10 mb-8">
           <div className="flex items-start gap-6">
-            <div className="w-20 h-20 rounded-2xl bg-primary-50 flex items-center justify-center shrink-0">
-              <Building2 className="w-10 h-10 text-primary-600" />
+            <div className="w-20 h-20 rounded-2xl bg-white border border-slate-100 p-2 flex items-center justify-center shrink-0 overflow-hidden">
+              {instansi.logo ? (
+                <img src={instansi.logo} alt={`Logo ${instansi.nama}`} className="w-full h-full object-contain" />
+              ) : (
+                <Building2 className="w-10 h-10 text-primary-600" />
+              )}
             </div>
             <div className="flex-1">
               <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-primary-50 text-primary-700 mb-3">
