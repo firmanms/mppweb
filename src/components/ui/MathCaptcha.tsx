@@ -67,7 +67,7 @@ export default function MathCaptcha({ onValidate }: MathCaptchaProps) {
         Verifikasi Keamanan <span className="text-red-500">*</span>
       </label>
       <div className="flex items-center gap-3">
-        <div className="flex items-center justify-center bg-slate-100 border border-slate-200 px-4 py-2.5 rounded-xl font-mono text-lg font-bold text-slate-700 min-w-[120px] select-none">
+        <div className="flex items-center justify-center bg-slate-100 border border-slate-200 px-3 py-2.5 rounded-xl font-mono text-base font-bold text-slate-700 min-w-[110px] select-none">
           {num1} {operator} {num2} = ?
         </div>
         <button
