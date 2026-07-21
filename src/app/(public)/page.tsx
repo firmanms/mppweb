@@ -244,7 +244,7 @@ export default async function HomePage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
             <Link href="/instansi" className="bg-white border border-slate-100 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-3 hover:border-primary-200 hover:shadow-soft transition-all duration-200">
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-primary-600 flex items-center justify-center">
                 <Icons.Building className="w-6 h-6" />
@@ -259,12 +259,12 @@ export default async function HomePage() {
               <strong className="text-slate-800 text-sm font-bold">Cari Layanan</strong>
             </Link>
 
-            <Link href="/layanan" className="bg-white border border-slate-100 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-3 hover:border-primary-200 hover:shadow-soft transition-all duration-200">
+            {/* <Link href="/layanan" className="bg-white border border-slate-100 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-3 hover:border-primary-200 hover:shadow-soft transition-all duration-200">
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-primary-600 flex items-center justify-center">
                 <Icons.FileText className="w-6 h-6" />
               </div>
               <strong className="text-slate-800 text-sm font-bold">Persyaratan Layanan</strong>
-            </Link>
+            </Link> */}
 
             <a href="#lokasi" className="bg-white border border-slate-100 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-3 hover:border-primary-200 hover:shadow-soft transition-all duration-200">
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-primary-600 flex items-center justify-center">
@@ -273,12 +273,12 @@ export default async function HomePage() {
               <strong className="text-slate-800 text-sm font-bold">Lokasi & Peta</strong>
             </a>
 
-            <Link href="/mpp-digital" className="bg-white border border-slate-100 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-3 hover:border-primary-200 hover:shadow-soft transition-all duration-200">
+            {/* <Link href="/mpp-digital" className="bg-white border border-slate-100 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-3 hover:border-primary-200 hover:shadow-soft transition-all duration-200">
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-primary-600 flex items-center justify-center">
                 <Icons.UserRoundCheck className="w-6 h-6" />
               </div>
               <strong className="text-slate-800 text-sm font-bold">Antrean Online</strong>
-            </Link>
+            </Link> */}
 
             <a href="#kritik-saran" className="bg-white border border-slate-100 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-3 hover:border-primary-200 hover:shadow-soft transition-all duration-200">
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-primary-600 flex items-center justify-center">
@@ -616,11 +616,14 @@ export default async function HomePage() {
                   <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-8 h-1 bg-slate-300 rounded-full" />
                 </div>
                 <div>
+                  <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-primary-200 text-xs font-semibold mb-2">
+                    Layanan Publik Nasional
+                  </span>
                   <h3 className="text-xl md:text-2xl font-extrabold" style={{ fontFamily: "var(--font-heading)" }}>
-                    Butuh pelayanan administrasi secara online?
+                    MPP Digital (Nasional)
                   </h3>
                   <p className="text-sm text-primary-200 mt-2 max-w-xl leading-relaxed">
-                    Gunakan aplikasi MPP Digital untuk mengakses berbagai layanan administrasi kependudukan dan perizinan secara mudah, aman, dan langsung dari smartphone Anda.
+                    Aplikasi terpadu skala nasional untuk mengakses berbagai layanan administrasi kependudukan dan perizinan secara terintegrasi langsung dari smartphone Anda.
                   </p>
                 </div>
               </div>
@@ -633,6 +636,55 @@ export default async function HomePage() {
                 Akses MPP Digital
                 <Icons.ArrowRight className="w-4 h-4" />
               </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Bedas Digital Services (BDS) Section */}
+      <section className="py-12 bg-white pt-0" id="bedas-digital">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-[24px] bg-gradient-to-r from-slate-900 via-primary-950 to-slate-900 text-white p-8 md:p-12 shadow-xl border border-slate-800">
+            {/* Floating Background Glow */}
+            <div className="absolute right-0 top-0 w-80 h-80 rounded-full bg-accent-500/10 blur-3xl pointer-events-none" />
+
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 relative z-10">
+              <div className="space-y-4 max-w-2xl">
+                <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-accent-500/20 text-accent-300 border border-accent-500/30 text-xs font-semibold">
+                  <Icons.Smartphone className="w-4 h-4" /> Bedas Digital Services (Pemkab Bandung)
+                </span>
+                <h3 className="text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: "var(--font-heading)" }}>
+                  Layanan Publik Online Satu Pintu Pemkab Bandung
+                </h3>
+                <p className="text-sm md:text-base text-slate-300 leading-relaxed">
+                  Bedas Digital Services merupakan Sistem layanan satu pintu yang terintegrasi dengan seluruh Aplikasi yang ada di Kabupaten Bandung, dengan tujuan untuk memudahkan masyarakat Kabupaten Bandung mendapatkan akses layanan tanpa perlu banyak mengunduh aplikasi. Masyarakat dapat mengajukan permohonan layanan, serta dapat mengetahui status pengajuan kapanpun dan dimanapun.
+                </p>
+                <div className="text-xs text-accent-300 bg-white/5 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/10 inline-block font-medium">
+                  {/* <strong>Layanan Terkait:</strong> Administrasi Kependudukan, Perizinan, Kesehatan, dan Layanan Publik Lainnya. */}
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 w-full lg:w-auto shrink-0">
+                <a
+                  href="https://play.google.com/store/apps/details?id=id.citigov.bandungkab&hl=id"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-accent-500 hover:bg-accent-600 text-slate-900 font-bold text-sm transition-all shadow-lg hover:-translate-y-0.5"
+                >
+                  <Icons.Smartphone className="w-5 h-5" />
+                  Play Store
+                </a>
+                <a
+                  href="https://bds.bandungkab.go.id"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm border border-white/20 backdrop-blur-sm transition-all hover:-translate-y-0.5"
+                >
+                  <Icons.Globe className="w-5 h-5 text-accent-400" />
+                  Akses Web BDS
+                  <Icons.ExternalLink className="w-4 h-4 text-slate-300" />
+                </a>
+              </div>
             </div>
           </div>
         </div>

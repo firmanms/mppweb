@@ -59,14 +59,17 @@ export default function MppDigitalPage() {
           <div className="w-20 h-20 rounded-2xl bg-accent-500 flex items-center justify-center mx-auto mb-8 shadow-xl">
             <Smartphone className="w-10 h-10 text-white" />
           </div>
+          <div className="inline-block px-4 py-1.5 rounded-full bg-white/10 text-accent-300 text-xs font-semibold mb-4 border border-white/15">
+            Layanan Publik Digital Nasional
+          </div>
           <h1
             className="text-4xl sm:text-5xl font-extrabold mb-6"
             style={{ fontFamily: "var(--font-plus-jakarta)" }}
           >
-            Aplikasi MPP Digital
+            Aplikasi MPP Digital (Nasional)
           </h1>
           <p className="text-lg sm:text-xl text-primary-100 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Hadir dalam genggaman Anda. Akses berbagai layanan publik Kabupaten Bandung secara digital langsung dari smartphone.
+            Aplikasi layanan publik terpadu skala nasional dari KemenPAN-RB untuk memudahkan akses layanan kependudukan dan perizinan langsung dari smartphone Anda.
           </p>
           <a
             href="https://play.google.com/store/apps/details?id=com.mppdigital.app&hl=id"
@@ -101,6 +104,98 @@ export default function MppDigitalPage() {
                 <p className="text-sm text-slate-500">{item.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Bedas Digital Services Section */}
+      <section className="py-20 bg-white border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-br from-primary-900 via-primary-800 to-slate-900 rounded-3xl p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden">
+            {/* Decorative BG elements */}
+            <div className="absolute -bottom-10 -right-10 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary-400/10 rounded-full blur-2xl" />
+
+            <div className="relative grid lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-7 space-y-6">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent-500/20 text-accent-300 border border-accent-500/30 text-xs font-semibold">
+                  <Smartphone className="w-4 h-4" />
+                  Layanan Publik Online Pemkab Bandung
+                </div>
+
+                <h2
+                  className="text-3xl sm:text-4xl font-extrabold text-white"
+                  style={{ fontFamily: "var(--font-plus-jakarta)" }}
+                >
+                  Bedas Digital Services
+                </h2>
+
+                <p className="text-slate-200 text-base sm:text-lg leading-relaxed">
+                  Bedas Digital Services merupakan sistem layanan satu pintu yang terintegrasi dengan seluruh aplikasi yang ada di Kabupaten Bandung, dengan tujuan untuk memudahkan masyarakat Kabupaten Bandung mendapatkan akses layanan tanpa perlu banyak mengunduh aplikasi. Masyarakat dapat mengajukan permohonan layanan, serta dapat mengetahui status pengajuan kapanpun dan dimanapun.
+                </p>
+
+                {/* <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 text-sm text-slate-200">
+                  <span className="font-bold text-accent-300">Layanan Utama:</span> Antara lain layanan Administrasi Kependudukan, Perizinan, dan layanan daerah terpadu lainnya.
+                </div> */}
+
+                <div className="flex flex-wrap items-center gap-4 pt-2">
+                  <a
+                    href="https://play.google.com/store/apps/details?id=id.citigov.bandungkab&hl=id"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-accent-500 hover:bg-accent-600 text-slate-900 font-bold text-sm transition-all shadow-lg hover:-translate-y-0.5"
+                  >
+                    <Smartphone className="w-5 h-5" />
+                    Unduh di Play Store
+                  </a>
+
+                  <a
+                    href="https://bds.bandungkab.go.id"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm border border-white/20 backdrop-blur-sm transition-all hover:-translate-y-0.5"
+                  >
+                    <Globe className="w-5 h-5 text-accent-400" />
+                    Akses via Web (bds.bandungkab.go.id)
+                    <ExternalLink className="w-4 h-4 text-slate-300" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Decorative Features Card */}
+              <div className="lg:col-span-5 flex justify-center">
+                <div className="bg-white/10 backdrop-blur-xl border border-white/15 p-6 sm:p-8 rounded-3xl w-full max-w-md space-y-4 shadow-xl">
+                  <div className="flex items-center gap-4 pb-4 border-b border-white/10">
+                    <div className="w-12 h-12 rounded-2xl bg-accent-500 text-slate-900 flex items-center justify-center font-bold text-xl shrink-0">
+                      BDS
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-white text-lg">Bedas Digital</h3>
+                      <p className="text-xs text-slate-300">Satu Pintu Layanan Publik</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3 text-sm text-slate-200">
+                      <CheckCircle2 className="w-5 h-5 text-accent-400 shrink-0 mt-0.5" />
+                      <span>Terintegrasi seluruh aplikasi Kabupaten Bandung</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm text-slate-200">
+                      <CheckCircle2 className="w-5 h-5 text-accent-400 shrink-0 mt-0.5" />
+                      <span>Permohonan & tracking status online 24/7</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm text-slate-200">
+                      <CheckCircle2 className="w-5 h-5 text-accent-400 shrink-0 mt-0.5" />
+                      <span>Administrasi Kependudukan & Perizinan</span>
+                    </div>
+                    <div className="flex items-start gap-3 text-sm text-slate-200">
+                      <CheckCircle2 className="w-5 h-5 text-accent-400 shrink-0 mt-0.5" />
+                      <span>Praktis tanpa perlu unduh banyak aplikasi</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
