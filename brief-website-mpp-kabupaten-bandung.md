@@ -19,7 +19,7 @@ Website dirancang dengan tampilan modern, responsif, informatif, ramah pengguna,
 - Menampilkan fasilitas yang tersedia di lokasi MPP.
 - Menyampaikan berita dan informasi terbaru.
 - Memberikan pengalaman kunjungan melalui fitur Virtual Tour.
-- Menghubungkan masyarakat dengan layanan SAKTI.
+- Menghubungkan masyarakat dengan layanan MPP Digital (SAKTI & layanan daring lainnya).
 
 ## 3. Target Pengguna
 
@@ -34,32 +34,55 @@ Website dirancang dengan tampilan modern, responsif, informatif, ramah pengguna,
 
 ## 4. Stack Teknologi
 
-| Layer | Teknologi |
-|---|---|
-| Framework | Next.js 14/15 (App Router) |
-| Bahasa | TypeScript |
-| ORM | Prisma |
-| Database | MySQL 8 |
-| Auth (admin) | NextAuth.js (Auth.js) / Lucia Auth |
-| Styling | Tailwind CSS |
-| Komponen UI | shadcn/ui |
-| Validasi form | Zod + React Hook Form |
-| Rich text editor | Tiptap / Lexical (untuk konten Berita & deskripsi Layanan) |
-| Upload & optimasi media | Sharp + storage lokal, atau S3-compatible (MinIO) |
-| Virtual Tour 360° | Pannellum.js |
-| Peta lokasi | Leaflet.js atau Google Maps Embed API |
-| Icon | Lucide React |
-| Animasi (opsional) | Framer Motion |
+| Layer | Teknologi | Versi/Keterangan |
+|---|---|---|
+| Framework | Next.js (App Router) | v16.2.10 |
+| Bahasa | TypeScript | v5 |
+| Runtime | React | v19.2.4 |
+| ORM | Prisma (dengan adapter MariaDB) | v7.8.0 |
+| Database | MySQL 8 | via `@prisma/adapter-mariadb` |
+| Auth (admin) | NextAuth.js (Auth.js) | v5.0.0-beta.31 + `@auth/prisma-adapter` |
+| Styling | Tailwind CSS | v4 (PostCSS plugin `@tailwindcss/postcss`) |
+| Validasi form | Zod v4 + React Hook Form v7 | `@hookform/resolvers` |
+| Rich text editor | react-quill-new | v3.8.3 |
+| Upload & optimasi media | Sharp + storage lokal / S3-compatible | `@aws-sdk/client-s3` + Sharp v0.35 |
+| Slug generator | slugify | v1.6.9 |
+| Utilitas CSS | clsx + tailwind-merge | — |
+| Date formatting | date-fns | v4.4.0 |
+| Hashing password | bcryptjs | v3.0.3 |
+| Icon | Lucide React | v1.25.0 |
+| Animasi | Framer Motion | v12.42.2 |
 
 ### Arsitektur
 
 ```
-Next.js (App Router) — 1 Aplikasi, 1 Database
-   ├── (public)/        → Halaman publik, render SSG/ISR untuk performa & SEO
-   ├── admin/           → Panel admin untuk staf pengelola MPP
-   ├── Server Actions   → Operasi CRUD (tambah/edit/hapus data)
-   ├── Prisma ORM
-   └── MySQL Database
+Next.js 16 (App Router) — 1 Aplikasi, 1 Database
+   ├── src/app/(public)/       → Halaman publik (Beranda, Profil, Instansi, dll.)
+   ├── src/app/admin/          → Panel admin (login + panel CRUD)
+   │   ├── login/              → Halaman login admin
+   │   └── (panel)/            → Layout admin dengan sidebar
+   │       ├── dashboard/
+   │       ├── instansi/
+   │       ├── layanan/
+   │       ├── fasilitas/
+   │       ├── berita/
+   │       ├── galeri/
+   │       ├── kategori/       → Manajemen kategori terpusat
+   │       ├── pesan/
+   │       └── pengaturan/     → Pengaturan situs (logo, kontak, S3, dll.)
+   ├── src/app/actions/        → Server Actions (CRUD langsung via Prisma)
+   ├── src/app/api/upload/     → Route Handler untuk upload media
+   ├── src/components/         → Komponen reusable
+   │   ├── layout/             → Header, Footer
+   │   ├── ui/                 → ImageUploader, RichTextEditor, MathCaptcha, WhatsAppButton
+   │   ├── berita/             → BeritaList (client component)
+   │   ├── instansi/           → InstansiList (client component)
+   │   └── layanan/            → LayananList (client component)
+   ├── src/lib/                → Prisma client, utilitas
+   ├── prisma/
+   │   ├── schema.prisma       → Definisi model database
+   │   └── seed.ts             → Data seed awal
+   └── public/uploads/         → Direktori upload media lokal
 ```
 
 Tidak ada sistem terpisah antara backend dan frontend — satu aplikasi, satu proses deployment, satu database, sehingga maintenance lebih sederhana dan biaya infrastruktur lebih efisien.
@@ -68,12 +91,12 @@ Tidak ada sistem terpisah antara backend dan frontend — satu aplikasi, satu pr
 
 ## 5. STRUKTUR MENU WEBSITE
 
-### 5.1 Beranda
+### 5.1 Beranda ✅ Selesai
 
 Halaman utama yang menampilkan informasi singkat dan akses cepat menuju layanan MPP.
 
 **Konten utama:**
-- Hero banner dengan foto Gedung Mal Pelayanan Publik Kabupaten Bandung.
+- Hero banner dengan foto Gedung Mal Pelayanan Publik Kabupaten Bandung (foto dari pengaturan admin).
 - Sambutan singkat atau slogan pelayanan.
 - Tombol *Lihat Layanan* dan *Virtual Tour*.
 - Statistik jumlah instansi dan layanan.
@@ -90,11 +113,11 @@ Halaman utama yang menampilkan informasi singkat dan akses cepat menuju layanan 
 **Contoh subheadline:**
 > Mal Pelayanan Publik Kabupaten Bandung menghadirkan berbagai layanan pemerintahan dan pelayanan publik dalam satu lokasi yang nyaman dan mudah diakses.
 
-**Route:** `app/(public)/page.tsx` — rendering ISR (revalidate berkala agar data instansi/berita terbaru tetap tampil cepat).
+**Route:** `src/app/(public)/page.tsx` — data diambil dari database (instansi, layanan populer, berita terbaru, fasilitas, pengaturan situs).
 
 ---
 
-### 5.2 Profil
+### 5.2 Profil ✅ Selesai
 
 Halaman yang menjelaskan informasi umum mengenai Mal Pelayanan Publik Kabupaten Bandung.
 
@@ -108,11 +131,11 @@ Halaman yang menjelaskan informasi umum mengenai Mal Pelayanan Publik Kabupaten 
 - Sambutan pimpinan.
 - Alamat, kontak, dan jam pelayanan.
 
-**Route:** `app/(public)/profil/page.tsx` — konten disimpan di model `HalamanStatis` agar bisa diedit tanpa deploy ulang.
+**Route:** `src/app/(public)/profil/page.tsx` — konten disimpan di model `HalamanStatis` agar bisa diedit tanpa deploy ulang.
 
 ---
 
-### 5.3 Instansi
+### 5.3 Instansi ✅ Selesai
 
 Menampilkan seluruh instansi yang membuka layanan di Mal Pelayanan Publik Kabupaten Bandung.
 
@@ -128,14 +151,16 @@ Menampilkan seluruh instansi yang membuka layanan di Mal Pelayanan Publik Kabupa
 
 **Fitur pendukung:**
 - Pencarian instansi.
-- Filter berdasarkan kategori.
+- Filter berdasarkan kategori (via model `Kategori` terpusat, tipe `instansi`).
 - Pengelompokan instansi pemerintah, BUMN, BUMD, dan lembaga lainnya.
 
-**Route:** `app/(public)/instansi/page.tsx` (daftar + filter/search) dan `app/(public)/instansi/[slug]/page.tsx` (detail).
+**Route:** `src/app/(public)/instansi/page.tsx` (daftar + filter/search) dan `src/app/(public)/instansi/[slug]/page.tsx` (detail).
+
+**Client Component:** `src/components/instansi/InstansiList.tsx` — menangani search & filter di sisi klien.
 
 ---
 
-### 5.4 Layanan
+### 5.4 Layanan ✅ Selesai
 
 Halaman untuk mencari seluruh layanan yang tersedia.
 
@@ -143,27 +168,30 @@ Halaman untuk mencari seluruh layanan yang tersedia.
 - Nama layanan.
 - Instansi penyelenggara.
 - Deskripsi layanan.
+- Dasar hukum.
 - Persyaratan.
 - Prosedur pelayanan.
 - Waktu penyelesaian.
 - Biaya atau tarif.
 - Produk layanan.
-- Lokasi loket.
-- Jadwal pelayanan.
+- Pengaduan.
+- Jam operasional.
 - Tombol akses layanan daring apabila tersedia.
 
 **Fitur:**
 - Pencarian berdasarkan nama layanan.
 - Filter berdasarkan instansi.
-- Filter berdasarkan kategori layanan.
+- Filter berdasarkan kategori layanan (via model `Kategori` terpusat, tipe `layanan`).
 - Daftar layanan populer.
 - Informasi layanan gratis atau berbayar.
 
-**Route:** `app/(public)/layanan/page.tsx` dan `app/(public)/layanan/[slug]/page.tsx`.
+**Route:** `src/app/(public)/layanan/page.tsx` dan `src/app/(public)/layanan/[slug]/page.tsx`.
+
+**Client Component:** `src/components/layanan/LayananList.tsx` — menangani search & filter di sisi klien.
 
 ---
 
-### 5.5 Fasilitas
+### 5.5 Fasilitas ✅ Selesai
 
 Menampilkan fasilitas yang tersedia untuk mendukung kenyamanan pengunjung.
 
@@ -183,17 +211,17 @@ Menampilkan fasilitas yang tersedia untuk mendukung kenyamanan pengunjung.
 - Ruang konsultasi.
 - Kantin atau area kuliner.
 
-Setiap fasilitas dilengkapi foto, deskripsi, dan lokasi.
+Setiap fasilitas dilengkapi foto, deskripsi, lokasi, dan ikon.
 
-**Route:** `app/(public)/fasilitas/page.tsx`.
+**Route:** `src/app/(public)/fasilitas/page.tsx`.
 
 ---
 
-### 5.6 Berita
+### 5.6 Berita ✅ Selesai
 
 Menampilkan informasi dan perkembangan terbaru mengenai MPP Kabupaten Bandung.
 
-**Kategori berita:**
+**Kategori berita (via model `Kategori` terpusat, tipe `berita`):**
 - Berita pelayanan.
 - Pengumuman.
 - Agenda kegiatan.
@@ -204,21 +232,23 @@ Menampilkan informasi dan perkembangan terbaru mengenai MPP Kabupaten Bandung.
 
 **Fitur:**
 - Daftar berita terbaru.
-- Berita unggulan.
+- Berita unggulan (featured).
 - Pencarian berita.
 - Filter kategori.
-- Detail berita.
+- Detail berita dengan ringkasan.
 - Tombol berbagi ke media sosial.
 
-**Route:** `app/(public)/berita/page.tsx` dan `app/(public)/berita/[slug]/page.tsx`.
+**Route:** `src/app/(public)/berita/page.tsx` dan `src/app/(public)/berita/[slug]/page.tsx`.
+
+**Client Component:** `src/components/berita/BeritaList.tsx` — menangani search & filter di sisi klien.
 
 ---
 
-### 5.7 Galeri
+### 5.7 Galeri ✅ Selesai
 
 Menampilkan dokumentasi foto dan video kegiatan.
 
-**Kategori galeri:**
+**Kategori galeri (via model `Kategori` terpusat, tipe `galeri`):**
 - Kegiatan pelayanan.
 - Kunjungan kerja.
 - Sosialisasi.
@@ -229,79 +259,88 @@ Menampilkan dokumentasi foto dan video kegiatan.
 
 Galeri ditampilkan dalam bentuk grid modern, dapat dibuka dalam tampilan layar penuh (lightbox).
 
-**Route:** `app/(public)/galeri/page.tsx`.
+**Route:** `src/app/(public)/galeri/page.tsx`.
 
 ---
 
-### 5.8 Tour
+### 5.8 Tour ✅ Selesai
 
-Halaman Virtual Tour yang memungkinkan masyarakat melihat kondisi dan fasilitas MPP secara daring. 
-akan dialihkan ke url berikut: https://mpp.bandungkab.go.id/tour
+Halaman Virtual Tour yang mengalihkan masyarakat ke URL: https://mpp.bandungkab.go.id/tour
 
-### 5.9 SAKTI
+**Route:** `src/app/(public)/tour/page.tsx` — redirect ke URL eksternal.
 
-Halaman khusus yang menghubungkan masyarakat dengan layanan SAKTI.
+---
+
+### 5.9 MPP Digital ✅ Selesai (menggantikan "SAKTI" pada brief awal)
+
+Halaman yang menghubungkan masyarakat dengan layanan MPP Digital, termasuk SAKTI dan layanan daring instansi lainnya.
 
 **Konten:**
-- Penjelasan singkat mengenai SAKTI.
-- Manfaat layanan.
-- Jenis layanan yang tersedia.
+- Penjelasan mengenai MPP Digital.
+- Daftar layanan daring dari seluruh instansi yang memiliki `linkDaring`.
+- Akses cepat ke layanan SAKTI.
 - Panduan penggunaan.
-- Persyaratan layanan.
-- Pertanyaan yang sering diajukan.
-- Tombol Akses SAKTI.
-- Kontak bantuan apabila masyarakat mengalami kendala.
+- Kontak bantuan.
 
-**Route:** `app/(public)/sakti/page.tsx`.
+**Route:** `src/app/(public)/mpp-digital/page.tsx`.
+
+**Catatan:** Menu "SAKTI" pada brief awal telah diubah menjadi "MPP Digital" yang lebih luas cakupannya, mencakup seluruh layanan daring.
 
 ---
 
-## 6. Panel Admin (`/admin`)
+## 6. Panel Admin (`/admin`) ✅ Selesai
 
-Karena tidak menggunakan CMS siap pakai (Strapi/Filament), panel admin dibangun manual di dalam Next.js, khusus digunakan oleh staf pengelola MPP untuk mengelola konten.
+Panel admin dibangun manual di dalam Next.js, khusus digunakan oleh staf pengelola MPP untuk mengelola konten.
 
 **Fitur admin:**
-- Login (NextAuth.js) dengan role: Super Admin, Editor.
-- CRUD Instansi, Layanan, Fasilitas, Berita, Galeri.
-- Manajemen upload media (foto/video).
-- Manajemen halaman statis (Profil, SAKTI).
-- Manajemen pesan formulir kritik & saran.
-- Log aktivitas pengguna admin (audit trail sederhana).
+- Login (NextAuth.js v5 beta) dengan role: Super Admin, Editor.
+- CRUD Instansi — `src/app/admin/(panel)/instansi/page.tsx`
+- CRUD Layanan (termasuk dasar hukum, produk layanan, pengaduan, jam operasional) — `src/app/admin/(panel)/layanan/page.tsx`
+- CRUD Fasilitas (termasuk ikon) — `src/app/admin/(panel)/fasilitas/page.tsx`
+- CRUD Berita (termasuk ringkasan, featured) — `src/app/admin/(panel)/berita/page.tsx`
+- CRUD Galeri — `src/app/admin/(panel)/galeri/page.tsx`
+- Manajemen Kategori terpusat (instansi, layanan, berita, galeri) — `src/app/admin/(panel)/kategori/page.tsx`
+- Manajemen pesan/saran masyarakat (status dibaca) — `src/app/admin/(panel)/pesan/page.tsx`
+- Dashboard statistik — `src/app/admin/(panel)/dashboard/page.tsx`
+- Pengaturan situs (logo, header, kontak, WA, maps, sosial media, foto dinamis, konfigurasi S3 storage) — `src/app/admin/(panel)/pengaturan/page.tsx`
 
-**Route:**
+**Server Actions (CRUD via Prisma):**
 ```
-app/admin/
-  (auth)/login/page.tsx
-  dashboard/page.tsx
-  instansi/page.tsx
-  layanan/page.tsx
-  fasilitas/page.tsx
-  berita/page.tsx
-  galeri/page.tsx
-  pesan/page.tsx
-  pengaturan/page.tsx
+src/app/actions/
+  ├── auth.ts           → Login/logout admin
+  ├── instansi.ts       → CRUD instansi
+  ├── layanan.ts        → CRUD layanan
+  ├── fasilitas.ts      → CRUD fasilitas
+  ├── berita.ts         → CRUD berita
+  ├── galeri.ts         → CRUD galeri
+  ├── kategori.ts       → CRUD kategori terpusat
+  ├── pesan.ts          → Kirim & kelola pesan saran
+  ├── halaman-statis.ts → Update halaman statis (profil, dll.)
+  └── pengaturan.ts     → Update pengaturan situs
 ```
 
-CRUD dijalankan melalui **Server Actions** (`"use server"`) yang memanggil Prisma langsung, tanpa perlu membuat REST API terpisah — kecuali di kemudian hari dibutuhkan integrasi dengan aplikasi mobile, yang dapat ditangani lewat Route Handlers (`app/api/.../route.ts`).
+**API Route Handler:**
+- `src/app/api/upload/route.ts` — Upload file media (lokal & S3-compatible).
 
 ---
 
-## 7. Skema Database (Prisma + MySQL — gambaran)
+## 7. Skema Database (Prisma + MySQL — Implementasi Aktual)
 
 ```prisma
 model Instansi {
-  id            Int       @id @default(autoincrement())
-  nama          String
-  slug          String    @unique
-  logo          String?
-  deskripsi     String?   @db.Text
-  kategori      String    // Pemerintah, BUMN, BUMD, Lainnya
-  lokasiLoket   String?
-  jamPelayanan  String?
-  kontak        String?
-  layanan       Layanan[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id           Int       @id @default(autoincrement())
+  nama         String
+  slug         String    @unique
+  logo         String?
+  deskripsi    String?   @db.Text
+  kategoriId   Int?
+  kategori     Kategori? @relation(fields: [kategoriId], references: [id], onDelete: SetNull)
+  lokasiLoket  String?
+  jamPelayanan String?
+  kontak       String?
+  layanan      Layanan[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 
 model Layanan {
@@ -309,93 +348,192 @@ model Layanan {
   nama              String
   slug              String    @unique
   instansiId        Int
-  instansi          Instansi  @relation(fields: [instansiId], references: [id])
+  instansi          Instansi  @relation(fields: [instansiId], references: [id], onDelete: Cascade)
   deskripsi         String?   @db.Text
+  dasarHukum        String?   @db.Text
   persyaratan       String?   @db.Text
   prosedur          String?   @db.Text
   waktuPenyelesaian String?
   biaya             String?
-  kategori          String?
-  status            String    // gratis / berbayar
+  produkLayanan     String?   @db.Text
+  pengaduan         String?   @db.Text
+  kategoriId        Int?
+  kategori          Kategori? @relation(fields: [kategoriId], references: [id], onDelete: SetNull)
+  status            String    @default("gratis") // gratis / berbayar
   linkDaring        String?
+  jamOperasional    String?
   populer           Boolean   @default(false)
   createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 }
 
 model Fasilitas {
-  id          Int     @id @default(autoincrement())
-  nama        String
-  foto        String?
-  deskripsi   String? @db.Text
-  lokasi      String?
+  id        Int      @id @default(autoincrement())
+  nama      String
+  slug      String   @unique
+  foto      String?
+  deskripsi String?  @db.Text
+  lokasi    String?
+  ikon      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Berita {
-  id           Int      @id @default(autoincrement())
-  judul        String
-  slug         String   @unique
-  kategori     String
-  konten       String   @db.Text
-  fotoUtama    String?
-  featured     Boolean  @default(false)
-  publishedAt  DateTime @default(now())
+  id          Int       @id @default(autoincrement())
+  judul       String
+  slug        String    @unique
+  kategoriId  Int?
+  kategori    Kategori? @relation(fields: [kategoriId], references: [id], onDelete: SetNull)
+  konten      String    @db.Text
+  ringkasan   String?   @db.Text
+  fotoUtama   String?
+  featured    Boolean   @default(false)
+  publishedAt DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Galeri {
-  id        Int      @id @default(autoincrement())
-  judul     String
-  kategori  String
-  mediaUrl  String
-  tipeMedia String   // foto / video
-  createdAt DateTime @default(now())
+  id         Int       @id @default(autoincrement())
+  judul      String
+  kategoriId Int?
+  kategori   Kategori? @relation(fields: [kategoriId], references: [id], onDelete: SetNull)
+  mediaUrl   String
+  tipeMedia  String    // foto / video
+  deskripsi  String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
 
 model HalamanStatis {
-  id       Int    @id @default(autoincrement())
-  slug     String @unique // profil, sakti
-  judul    String
-  konten   String @db.Text
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique // profil, sakti, dll
+  judul     String
+  konten    String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model PesanSaran {
   id        Int      @id @default(autoincrement())
   nama      String
   email     String?
+  telepon   String?
+  subjek    String?
   pesan     String   @db.Text
+  dibaca    Boolean  @default(false)
   createdAt DateTime @default(now())
 }
 
 model AdminUser {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  role     String @default("editor") // superadmin, editor
+  id        Int      @id @default(autoincrement())
+  nama      String
+  email     String   @unique
+  password  String
+  role      String   @default("editor") // superadmin, editor
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Kategori {
+  id        Int        @id @default(autoincrement())
+  nama      String
+  slug      String
+  tipe      String     // instansi, layanan, berita, galeri
+  instansi  Instansi[]
+  layanan   Layanan[]
+  berita    Berita[]
+  galeri    Galeri[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@unique([tipe, slug])
+}
+
+model Pengaturan {
+  id              Int      @id @default(1)
+  headerTitle     String?
+  headerSubtitle  String?  @db.Text
+  ratingKepuasan  String?
+  alamat          String?  @db.Text
+  jamOperasional  String?  @db.Text
+  nomorWa         String?
+  mapsUrl         String?  @db.Text
+  facebookUrl     String?
+  instagramUrl    String?
+  twitterUrl      String?
+  youtubeUrl      String?
+
+  // Teks Dinamis
+  teksProfilJudul     String?
+  teksProfilDeskripsi  String? @db.Text
+
+  // Gambar-gambar dinamis
+  logoWebsite     String?
+  fotoHeader      String?
+  fotoProfil      String?
+  fotoVirtualTour String?
+
+  // Penyimpanan (Storage)
+  uploadProvider  String   @default("local") // "local" atau "s3"
+  s3Endpoint      String?
+  s3Region        String?
+  s3AccessKey     String?
+  s3SecretKey     String?
+  s3BucketName    String?
+  s3PublicUrl     String?
+
+  updatedAt       DateTime @updatedAt
 }
 ```
+
+### Perbedaan dari Brief Awal
+
+| Aspek | Brief Awal | Implementasi Aktual |
+|---|---|---|
+| Kategori | Field `kategori` (String) di setiap model | Model `Kategori` terpusat dengan relasi, tipe: instansi/layanan/berita/galeri |
+| Layanan | 9 field | 14 field (tambah: dasarHukum, produkLayanan, pengaduan, kategoriId, jamOperasional) |
+| Fasilitas | 4 field | 8 field (tambah: slug, ikon, createdAt, updatedAt) |
+| Berita | 6 field | 9 field (tambah: kategoriId via relasi, ringkasan, createdAt, updatedAt) |
+| Galeri | 5 field | 8 field (tambah: kategoriId via relasi, deskripsi, updatedAt) |
+| PesanSaran | 4 field | 7 field (tambah: telepon, subjek, dibaca) |
+| AdminUser | 4 field | 7 field (tambah: nama, createdAt, updatedAt) |
+| Pengaturan | Tidak ada | Model baru — pengaturan situs dinamis (logo, kontak, sosmed, S3 config, foto header, dll.) |
+| SAKTI | Halaman terpisah `/sakti` | Digabung ke `/mpp-digital` yang lebih komprehensif |
+| Tour | Pannellum.js di dalam app | Redirect ke URL eksternal `mpp.bandungkab.go.id/tour` |
+| Rich Text Editor | Tiptap / Lexical | react-quill-new |
+| Auth | NextAuth.js / Lucia Auth | NextAuth.js v5 beta (Auth.js) |
 
 ---
 
 ## 8. KOMPONEN TAMBAHAN
 
-### Header
-- Logo Kabupaten Bandung.
-- Logo Mal Pelayanan Publik.
-- Menu navigasi.
-- Tombol pencarian.
-- Tombol akses layanan.
-- Menu responsif untuk perangkat seluler.
+### Header ✅ Selesai
+- Logo MPP (dari pengaturan admin, fallback ke ikon default).
+- Top bar: nomor WA, jam operasional, tombol "Akses MPP Digital".
+- Menu navigasi: Beranda, Profil, Instansi, Layanan, Fasilitas, Berita, Galeri, MPP Digital.
+- Tombol "Cari Layanan".
+- Menu responsif untuk perangkat seluler (hamburger menu + animasi slide).
+- Sticky header dengan efek glassmorphism saat scroll.
 
-### Footer
+### Footer ✅ Selesai
 - Logo dan nama MPP Kabupaten Bandung.
 - Alamat lengkap.
-- Nomor telepon.
+- Nomor telepon/WhatsApp.
 - Email.
 - Jam operasional.
-- Tautan media sosial.
+- Tautan media sosial (Facebook, Instagram, Twitter, YouTube — dari pengaturan).
 - Tautan cepat.
-- Peta lokasi.
-- Kebijakan privasi.
+- Peta lokasi (embed dari URL pengaturan).
 - Hak cipta website.
+
+### Komponen UI ✅ Selesai
+- `ImageUploader.tsx` — Upload gambar dengan preview.
+- `RichTextEditor.tsx` — Editor teks kaya (react-quill-new) untuk konten berita & deskripsi.
+- `MathCaptcha.tsx` — Captcha matematika sederhana untuk formulir publik.
+- `WhatsAppButton.tsx` — Tombol floating WhatsApp (nomor dari pengaturan).
+- `KritikSaranForm.tsx` — Formulir kritik dan saran masyarakat.
 
 ---
 
@@ -416,24 +554,33 @@ model AdminUser {
 - Putih dan abu-abu terang sebagai warna latar.
 - Warna kontras untuk tombol utama.
 
-Diimplementasikan melalui konfigurasi tema Tailwind CSS (`tailwind.config.ts`) agar konsisten di seluruh halaman.
+Diimplementasikan melalui Tailwind CSS v4 dengan custom theme di `globals.css` — variabel warna `primary-*` dan `accent-*` konsisten di seluruh halaman. Efek glassmorphism, gradient, dan shadow utilities juga didefinisikan.
 
 ---
 
 ## 10. FITUR UTAMA
 
-- Pencarian instansi dan layanan.
-- Filter kategori layanan.
-- Informasi jadwal pelayanan.
-- Integrasi Google Maps / Leaflet.
-- Virtual Tour 360 derajat.
-- Formulir kritik dan saran.
-- Informasi antrean apabila tersedia.
-- Integrasi layanan SAKTI.
-- Manajemen berita dan galeri lewat panel admin.
-- Tampilan responsif (mobile-first).
-- Dukungan aksesibilitas (kontras warna, alt text, navigasi keyboard).
-- Tombol WhatsApp atau pusat bantuan.
+| Fitur | Status |
+|---|---|
+| Pencarian instansi dan layanan | ✅ Selesai |
+| Filter kategori (instansi, layanan, berita, galeri) | ✅ Selesai |
+| Informasi jadwal pelayanan | ✅ Selesai |
+| Integrasi Google Maps (embed) | ✅ Selesai (via URL di pengaturan) |
+| Virtual Tour 360° | ✅ Selesai (redirect ke URL eksternal) |
+| Formulir kritik dan saran | ✅ Selesai (dengan MathCaptcha) |
+| MPP Digital (menggantikan SAKTI) | ✅ Selesai |
+| Manajemen berita dan galeri lewat panel admin | ✅ Selesai |
+| Tampilan responsif (mobile-first) | ✅ Selesai |
+| Tombol WhatsApp floating | ✅ Selesai |
+| Upload media (lokal + S3-compatible) | ✅ Selesai |
+| Pengaturan situs dinamis (tanpa deploy ulang) | ✅ Selesai |
+| Manajemen kategori terpusat | ✅ Selesai |
+| Dashboard admin (statistik) | ✅ Selesai |
+| Halaman statis (profil, dll.) editable | ✅ Selesai |
+| Informasi antrean | ❌ Belum tersedia |
+| Dukungan aksesibilitas (kontras warna, alt text, navigasi keyboard) | 🔄 Sebagian |
+| Log aktivitas admin (audit trail) | ❌ Belum tersedia |
+| SEO meta tags per halaman | 🔄 Sebagian |
 
 ---
 
@@ -444,10 +591,11 @@ Tombol utama yang digunakan:
 - Lihat Semua Layanan
 - Cari Instansi
 - Kunjungi Virtual Tour
-- Akses SAKTI
+- Akses MPP Digital
 - Lihat Persyaratan
 - Petunjuk Lokasi
 - Hubungi Kami
+- Cari Layanan (di Header)
 
 ---
 
@@ -466,17 +614,36 @@ Tombol utama yang digunakan:
 |---|---|
 | Aplikasi Next.js | VPS/self-host (Diskominfo/PDN) dengan PM2 + Nginx, atau Vercel untuk tahap awal |
 | Database MySQL | Server terpisah atau managed MySQL, dengan backup rutin terjadwal |
-| Media/upload | Storage lokal di VPS atau S3-compatible (MinIO) |
+| Media/upload | Storage lokal di VPS atau S3-compatible (dikonfigurasi via panel admin Pengaturan) |
 | Domain & SSL | Domain resmi `.go.id`, HTTPS wajib |
 | CDN & keamanan dasar | Cloudflare (proteksi DDoS dasar, caching aset statis) |
 
 ---
 
-## 14. Timeline Kasar (Estimasi)
+## 14. Status Progres Keseluruhan
 
-1. **Minggu 1–2:** Setup project Next.js, Prisma schema, database MySQL, autentikasi admin.
-2. **Minggu 2–4:** Bangun panel admin (CRUD Instansi, Layanan, Fasilitas, Berita, Galeri).
-3. **Minggu 4–7:** Bangun halaman publik satu per satu (Beranda → Instansi → Layanan → dst) dengan Tailwind CSS.
-4. **Minggu 7–8:** Integrasi Virtual Tour, Peta Lokasi, SAKTI, formulir kritik & saran.
-5. **Minggu 8–9:** Testing (fungsional, performa, aksesibilitas), optimasi SEO, deployment.
-6. **Minggu 9:** Training staf pengelola untuk penggunaan panel admin.
+### ✅ Sudah Selesai
+1. Setup project Next.js 16, Prisma 7, database MySQL, autentikasi admin.
+2. Skema database lengkap (10 model) dengan seed data.
+3. Panel admin lengkap: Dashboard, CRUD Instansi, Layanan, Fasilitas, Berita, Galeri, Kategori, Pesan, Pengaturan.
+4. Seluruh halaman publik: Beranda, Profil, Instansi (daftar + detail), Layanan (daftar + detail), Fasilitas, Berita (daftar + detail), Galeri, Tour (redirect), MPP Digital.
+5. Komponen layout: Header (sticky + glassmorphism) dan Footer.
+6. Komponen UI: ImageUploader, RichTextEditor, MathCaptcha, WhatsAppButton, KritikSaranForm.
+7. Server Actions untuk seluruh operasi CRUD.
+8. Upload media (lokal + S3-compatible).
+9. Client-side search & filter untuk Instansi, Layanan, dan Berita.
+
+### 🔄 Perlu Penyempurnaan
+- SEO meta tags dan Open Graph per halaman.
+- Aksesibilitas (ARIA labels, keyboard navigation).
+- Optimasi performa (lazy loading, image optimization).
+
+### ❌ Belum Dikerjakan
+- Informasi antrean.
+- Log aktivitas admin (audit trail).
+- Training staf pengelola.
+
+---
+
+## refrensi CLI 
+https://chatgpt.com/c/6a5ee40f-b008-83ec-a605-8b2734548bf2
