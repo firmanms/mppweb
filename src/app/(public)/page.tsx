@@ -177,8 +177,8 @@ export default async function HomePage() {
       <div className="relative z-10 -mt-16 sm:-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-3xl shadow-soft border border-slate-100 p-6 md:p-8">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 divide-y md:divide-y-0 md:divide-x divide-slate-100">
-              <div className="flex items-center gap-4 md:pl-0 pt-4 md:pt-0">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-6 md:gap-12 lg:gap-24 divide-y md:divide-y-0 md:divide-x divide-slate-100 justify-center">
+              <div className="flex items-center gap-6 md:pl-0 pt-6 md:pt-0">
                 <div className="w-12 h-12 rounded-2xl bg-green-50 text-green-600 flex items-center justify-center shrink-0">
                   <Icons.Building2 className="w-6 h-6" />
                 </div>
@@ -198,7 +198,7 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 md:pl-6 pt-4 md:pt-0">
+              {/* <div className="flex items-center gap-4 md:pl-6 pt-4 md:pt-0">
                 <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
                   <Icons.Users className="w-6 h-6" />
                 </div>
@@ -226,7 +226,7 @@ export default async function HomePage() {
                   <p className="text-sm font-bold text-slate-900 leading-tight whitespace-pre-line">{data.pengaturan.jamOperasional}</p>
                   <p className="text-slate-400 text-xs mt-1">Jam Operasional</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

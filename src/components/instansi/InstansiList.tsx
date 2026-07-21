@@ -91,9 +91,10 @@ export default function InstansiList({ instansiList }: { instansiList: Instansi[
               </div>
 
               {inst.deskripsi && (
-                <p className="text-sm text-slate-500 mb-4 line-clamp-2">
-                  {inst.deskripsi}
-                </p>
+                <div 
+                  className="text-sm text-slate-500 mb-4 line-clamp-2 prose-content prose-sm"
+                  dangerouslySetInnerHTML={{ __html: inst.deskripsi }}
+                />
               )}
 
               <div className="flex items-center justify-between pt-4 border-t border-slate-50">
