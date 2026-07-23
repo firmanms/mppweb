@@ -41,6 +41,7 @@ export default function AdminInstansiPage() {
   const [kategoriList, setKategoriList] = useState<{ id: number; nama: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [filterLantai, setFilterLantai] = useState("Semua Lantai");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -157,9 +158,11 @@ export default function AdminInstansiPage() {
     }
   };
 
-  const filteredList = list.filter((item) =>
-    item.nama.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredList = list.filter((item) => {
+    const matchSearch = item.nama.toLowerCase().includes(search.toLowerCase());
+    const matchLantai = filterLantai === "Semua Lantai" || item.lantai === filterLantai;
+    return matchSearch && matchLantai;
+  });
 
   return (
     <div>
@@ -195,15 +198,28 @@ export default function AdminInstansiPage() {
 
       {/* Search & Stats */}
       <div className="bg-white rounded-2xl border border-slate-100 p-5 mb-8 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
-        <div className="relative w-full md:max-w-md">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Cari instansi berdasarkan nama..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
-          />
+        <div className="flex flex-col sm:flex-row gap-4 w-full md:max-w-xl">
+          <div className="relative flex-1">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Cari instansi berdasarkan nama..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+            />
+          </div>
+          <select
+            value={filterLantai}
+            onChange={(e) => setFilterLantai(e.target.value)}
+            className="w-full sm:w-48 px-3 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white"
+          >
+            <option value="Semua Lantai">Semua Lantai</option>
+            <option value="Lantai 1">Lantai 1</option>
+            <option value="Lantai 2">Lantai 2</option>
+            <option value="Lantai 3">Lantai 3</option>
+            <option value="Lantai 4">Lantai 4</option>
+          </select>
         </div>
         <p className="text-sm text-slate-500 shrink-0">
           Total: <span className="font-semibold text-slate-900">{filteredList.length}</span> Instansi

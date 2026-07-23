@@ -20,7 +20,20 @@ type Instansi = {
 
 export default function InstansiList({ instansiList }: { instansiList: Instansi[] }) {
   const categories = ["Semua", ...new Set(instansiList.map((inst) => inst.kategori?.nama || "Lainnya"))].sort();
-  const floors = ["Semua Lantai", "Lantai 1", "Lantai 2", "Lantai 3", "Lantai 4"];
+
+  // Dynamic floor options: only floors that actually exist in the data
+  const floors = useMemo(() => {
+    const existingFloors = new Set<string>();
+    instansiList.forEach((inst) => {
+      if (inst.lantai && inst.lantai.trim()) {
+        existingFloors.add(inst.lantai.trim());
+      }
+    });
+    const sorted = Array.from(existingFloors).sort((a, b) =>
+      a.localeCompare(b, undefined, { numeric: true })
+    );
+    return ["Semua Lantai", ...sorted];
+  }, [instansiList]);
 
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("Semua");

@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
+// Trigger Next.js dev server reload for Prisma client update
+const nextConfig: NextConfig = {};
 
 export default nextConfig;
