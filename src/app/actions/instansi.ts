@@ -22,6 +22,7 @@ export async function createInstansi(data: {
   logo?: string;
   deskripsi?: string;
   kategoriId?: number;
+  lantai?: string;
   lokasiLoket?: string;
   jamPelayanan?: string;
   kontak?: string;
@@ -41,6 +42,7 @@ export async function createInstansi(data: {
       logo: data.logo || null,
       deskripsi: data.deskripsi || null,
       kategoriId: data.kategoriId || null,
+      lantai: data.lantai || null,
       lokasiLoket: data.lokasiLoket || null,
       jamPelayanan: data.jamPelayanan || null,
       kontak: data.kontak || null,
@@ -59,6 +61,7 @@ export async function updateInstansi(
     logo?: string;
     deskripsi?: string;
     kategoriId?: number;
+    lantai?: string;
     lokasiLoket?: string;
     jamPelayanan?: string;
     kontak?: string;
@@ -90,6 +93,7 @@ export async function updateInstansi(
       logo: data.logo || null,
       deskripsi: data.deskripsi || null,
       kategoriId: data.kategoriId || null,
+      lantai: data.lantai || null,
       lokasiLoket: data.lokasiLoket || null,
       jamPelayanan: data.jamPelayanan || null,
       kontak: data.kontak || null,

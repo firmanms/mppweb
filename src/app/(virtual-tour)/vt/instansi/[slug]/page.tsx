@@ -7,7 +7,6 @@ import {
   Clock,
   Phone,
   ChevronRight,
-  ExternalLink,
   ArrowLeft,
   Layers,
   Globe,
@@ -105,6 +104,11 @@ export default async function VirtualTourInstansiPage({ params }: Props) {
                   <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary-500/10 text-primary-400 border border-primary-500/20">
                     {instansi.kategori?.nama || "Instansi"}
                   </span>
+                  {instansi.lantai && (
+                    <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                      {instansi.lantai}
+                    </span>
+                  )}
                   <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/5 text-slate-400">
                     {instansi.layanan.length} Layanan
                   </span>
@@ -132,7 +136,7 @@ export default async function VirtualTourInstansiPage({ params }: Props) {
         <section className="pb-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid sm:grid-cols-3 gap-4">
-              {instansi.lokasiLoket && (
+              {(instansi.lantai || instansi.lokasiLoket) && (
                 <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 flex gap-4">
                   <div className="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center shrink-0">
                     <MapPin className="w-5 h-5 text-primary-400" />
@@ -142,7 +146,7 @@ export default async function VirtualTourInstansiPage({ params }: Props) {
                       Lokasi Loket
                     </p>
                     <p className="text-sm text-slate-300 font-medium">
-                      {instansi.lokasiLoket}
+                      {[instansi.lantai, instansi.lokasiLoket].filter(Boolean).join(" — ")}
                     </p>
                   </div>
                 </div>

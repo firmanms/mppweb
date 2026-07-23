@@ -10,6 +10,7 @@ import {
   ArrowLeft,
   ChevronRight,
   ExternalLink,
+  Layers,
 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -64,9 +65,16 @@ export default async function InstansiDetailPage({ params }: Props) {
               )}
             </div>
             <div className="flex-1">
-              <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-primary-50 text-primary-700 mb-3">
-                {instansi.kategori?.nama || "-"}
-              </span>
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-primary-50 text-primary-700">
+                  {instansi.kategori?.nama || "-"}
+                </span>
+                {instansi.lantai && (
+                  <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-100">
+                    {instansi.lantai}
+                  </span>
+                )}
+              </div>
               <h1
                 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 mb-3"
                 style={{ fontFamily: "var(--font-plus-jakarta)" }}
@@ -84,12 +92,14 @@ export default async function InstansiDetailPage({ params }: Props) {
 
           {/* Info Grid */}
           <div className="grid sm:grid-cols-3 gap-6 mt-8 pt-8 border-t border-slate-100">
-            {instansi.lokasiLoket && (
+            {(instansi.lantai || instansi.lokasiLoket) && (
               <div className="flex gap-3">
                 <MapPin className="w-5 h-5 text-primary-500 shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-xs text-slate-400 uppercase tracking-wide font-semibold mb-1">Lokasi Loket</p>
-                  <p className="text-sm text-slate-700 font-medium">{instansi.lokasiLoket}</p>
+                  <p className="text-xs text-slate-400 uppercase tracking-wide font-semibold mb-1">Lokasi & Loket</p>
+                  <p className="text-sm text-slate-700 font-medium">
+                    {[instansi.lantai, instansi.lokasiLoket].filter(Boolean).join(" — ")}
+                  </p>
                 </div>
               </div>
             )}

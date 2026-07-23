@@ -14,6 +14,7 @@ model Instansi {
   deskripsi    String?   @db.Text
   kategoriId   Int?
   kategori     Kategori? @relation(fields: [kategoriId], references: [id], onDelete: SetNull)
+  lantai       String?
   lokasiLoket  String?
   jamPelayanan String?
   kontak       String?
